@@ -1,0 +1,1683 @@
+syntax = "proto3";
+// unused
+package te.service.cm.v1;
+
+option java_multiple_files = true;
+option java_package = "com.thousandeyes.service.cm.v1";
+
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.networkacl.AclAssociation
+message AclAssociation {
+  optional string networkAclAssociationId = 10;
+  optional string networkAclId = 11;
+  optional string subnetId = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.networkacl.AclEntry
+message AclEntry {
+  optional string cidrBlock = 10;
+  optional string ipv6CidrBlock = 11;
+  optional bool egress = 12;
+  optional string protocol = 14;
+  optional AclEntryRuleAction ruleAction = 15;
+  optional int32 ruleNumber = 16;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.networkacl.AclEntryRuleAction
+enum AclEntryRuleAction {
+  ACL_ENTRY_RULE_ACTION_ALLOW = 0;
+  ACL_ENTRY_RULE_ACTION_DENY = 1;
+  ACL_ENTRY_RULE_ACTION_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayvpcattachment.enums.ApplianceModeSupportValue
+enum ApplianceModeSupportValue {
+  APPLIANCE_MODE_SUPPORT_VALUE_ENABLE = 0;
+  APPLIANCE_MODE_SUPPORT_VALUE_DISABLE = 1;
+  APPLIANCE_MODE_SUPPORT_VALUE_UNKNOWN = 2;
+}
+// com.thousandeyes.cloudmonitoring.inventory.handler.post.processor.snapshot.model.AssetsSnapshot
+// Message for com.thousandeyes.cloudmonitoring.inventory.handler.post.processor.snapshot.model.AssetsSnapshot
+message AssetsSnapshot {
+  optional int64 time = 1;
+  optional string aid = 2;
+  optional string account_id = 3;
+  optional string region = 4;
+  optional string provider = 5;
+  optional SnapshotModelsAssets assets = 6;
+  optional SnapshotModelsEvents events = 7;
+  optional string accountName = 8;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.routetable.Association
+message Association {
+  optional bool main = 10;
+  optional string routeTableAssociationId = 11;
+  optional string routeTableId = 12;
+  optional string subnetId = 13;
+  optional string gatewayId = 14;
+  optional RouteTableAssociationStateCode associationState = 15;
+  optional string routeTableArn = 16;
+  optional string subnetArn = 17;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.application.AwsApplicationLoadBalancer
+message AwsApplicationLoadBalancer {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  repeated string enrichedIps = 9;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional LoadBalancerType type = 12;
+  optional string vpcId = 13;
+  optional string dnsName = 14;
+  repeated LbListener listeners = 15;
+  repeated LbAvailabilityZone availabilityZones = 16;
+  optional string vpcArn = 17;
+  optional string loadBalancerArn = 18;
+  repeated string securityGroups = 19;
+  repeated string securityGroupsArn = 20;
+  repeated LbAttribute attributes = 21;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.AwsClassicLoadBalancer
+message AwsClassicLoadBalancer {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  repeated string enrichedIps = 9;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string canonicalHostedZoneName = 12;
+  optional string canonicalHostedZoneNameID = 13;
+  repeated string availabilityZones = 14;
+  repeated string subnets = 15;
+  repeated string securityGroups = 16;
+  repeated string instances = 17;
+  optional string scheme = 19;
+  optional string vpcId = 20;
+  repeated ListenerDescription listenerDescriptions = 21;
+  repeated BackendServerDescription backendServerDescriptions = 22;
+  optional HealthCheck healthCheck = 23;
+  optional SourceSecurityGroup sourceSecurityGroup = 24;
+  repeated string instanceArns = 25;
+  repeated string securityGroupArns = 26;
+  repeated string subnetArns = 27;
+  optional LbAttributes lbAttributes = 29;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.AwsCloudFront
+message AwsCloudFront {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string cloudFrontArn = 11;
+  optional string cloudFrontId = 12;
+  optional string status = 13;
+  optional string domainName = 14;
+  repeated CloudFrontOrigin originSet = 15;
+  repeated string aliases = 16;
+  optional string comment = 17;
+  optional CloudFrontPriceClass priceClass = 18;
+  optional CloudFrontOriginGeoRestriction restrictions = 19;
+  optional string webACLId = 20;
+  optional CloudFrontHttpVersion httpVersion = 21;
+  optional bool isIPV6Enabled = 22;
+  optional bool staging = 23;
+  optional bool enabled = 24;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectconnection.AwsDirectConnectConnection
+message AwsDirectConnectConnection {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string ownerAccount = 10;
+  optional string connectionId = 11;
+  optional string connectionName = 12;
+  optional DirectConnectConnectionsState connectionState = 13;
+  optional string region = 14;
+  optional string location = 15;
+  optional string bandwidth = 16;
+  optional int32 vlan = 17;
+  optional string partnerName = 18;
+  optional int64 loaIssueTime = 20;
+  optional string lagId = 21;
+  optional string awsDevice = 22;
+  optional bool jumboFrameCapable = 23;
+  optional string awsDeviceV2 = 24;
+  optional string awsLogicalDeviceId = 25;
+  optional DirectConnectHasLogicalRedundancy hasLogicalRedundancy = 26;
+  optional string providerName = 27;
+  optional bool macSecCapable = 28;
+  optional string portEncryptionStatus = 29;
+  optional string encryptionMode = 30;
+  repeated AwsDirectConnectMacSecKey directConnectGatewayAttachments = 31;
+  optional string assetId = 32;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.AwsDirectConnectGateway
+message AwsDirectConnectGateway {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string directConnectGatewayId = 11;
+  optional string directConnectGatewayName = 12;
+  optional int64 amazonSideAsn = 13;
+  optional string ownerAccount = 14;
+  optional DirectConnectGatewayState directConnectGatewayState = 15;
+  optional string stateChangeError = 16;
+  repeated AwsDirectConnectGatewayAssociation directConnectGatewayAssociations = 17;
+  repeated AwsDirectConnectGatewayAttachment directConnectGatewayAttachments = 18;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.AwsDirectConnectGatewayAssociatedGateway
+message AwsDirectConnectGatewayAssociatedGateway {
+  optional string id = 10;
+  optional DirectConnectGatewayGatewayType type = 11;
+  optional string ownerAccount = 12;
+  optional string region = 13;
+  optional string gatewayArn = 14;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.AwsDirectConnectGatewayAssociation
+message AwsDirectConnectGatewayAssociation {
+  optional string directConnectGatewayId = 10;
+  optional string directConnectGatewayOwnerAccount = 11;
+  optional DirectConnectGatewayAssociationState associationState = 12;
+  optional string stateChangeError = 13;
+  optional string associationId = 14;
+  optional string virtualGatewayId = 15;
+  optional string virtualGatewayRegion = 16;
+  optional string virtualGatewayOwnerAccount = 17;
+  repeated AwsDirectConnectGatewayRouteFilterPrefix allowedPrefixesToDirectConnectGateway = 18;
+  optional AwsDirectConnectGatewayAssociatedGateway associatedGateway = 19;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.AwsDirectConnectGatewayAttachment
+message AwsDirectConnectGatewayAttachment {
+  optional string directConnectGatewayId = 10;
+  optional string virtualInterfaceId = 11;
+  optional string virtualInterfaceRegion = 12;
+  optional string virtualInterfaceOwnerAccount = 13;
+  optional DirectConnectGatewayAttachmentState attachmentState = 14;
+  optional DirectConnectGatewayAttachmentType attachmentType = 15;
+  optional string stateChangeError = 16;
+  optional string attachmentArn = 17;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.AwsDirectConnectGatewayRouteFilterPrefix
+message AwsDirectConnectGatewayRouteFilterPrefix {
+  optional string cidr = 10;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectconnection.AwsDirectConnectMacSecKey
+message AwsDirectConnectMacSecKey {
+  optional string secretARN = 10;
+  optional string ckn = 11;
+  optional string state = 12;
+  optional string startOn = 13;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectvifs.AwsDirectConnectVirtualInterface
+message AwsDirectConnectVirtualInterface {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string ownerId = 10;
+  optional string virtualInterfaceId = 11;
+  optional string location = 12;
+  optional string connectionId = 13;
+  optional string virtualInterfaceType = 14;
+  optional string virtualInterfaceName = 15;
+  optional int32 vlan = 16;
+  optional int32 asn = 17;
+  optional int64 amazonSideAsn = 18;
+  optional string authKey = 19;
+  optional string amazonAddress = 20;
+  optional string customerAddress = 21;
+  optional DirectConnectAddressFamily addressFamily = 22;
+  optional DirectConnectVirtualInterfaceState virtualInterfaceState = 23;
+  optional string customerRouterConfig = 24;
+  optional int32 mtu = 25;
+  optional bool jumboFrameCapable = 26;
+  optional string virtualGatewayId = 27;
+  optional string directConnectGatewayId = 28;
+  repeated DCRouteFilterPrefix routeFilterPrefixes = 29;
+  repeated DCBGPPeer bgpPeers = 30;
+  optional string region = 31;
+  optional string awsDeviceV2 = 32;
+  optional string awsLogicalDeviceId = 33;
+  optional bool siteLinkEnabled = 34;
+  optional string assetId = 35;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.eni.AwsEni
+message AwsEni {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string description = 12;
+  optional string macAddress = 13;
+  repeated string ips = 14;
+  optional string privateIpAddress = 15;
+  optional string publicIp = 16;
+  optional string vpcId = 17;
+  optional string azId = 18;
+  optional string availabilityZone = 19;
+  optional string subnetId = 20;
+  optional string instanceId = 21;
+  optional EniType interfaceType = 22;
+  repeated SecurityGroup securityGroups = 23;
+  repeated string targetGroupArns = 24;
+  optional string autoScalingGroupArn = 25;
+  optional string serviceId = 26;
+  optional string serviceType = 27;
+  optional string serviceName = 28;
+  repeated Tag serviceTags = 30;
+  optional string vpcArn = 31;
+  optional string subnetArn = 32;
+  optional string instanceArn = 33;
+  repeated string securityGroupsArn = 34;
+  optional string serviceArn = 35;
+  optional string eniId = 36;
+  optional string ownerId = 37;
+  optional EniStatus status = 38;
+  optional string requesterId = 39;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.gateway.AwsGatewayLoadBalancer
+message AwsGatewayLoadBalancer {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  repeated string enrichedIps = 9;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional LoadBalancerType type = 12;
+  optional string vpcId = 13;
+  optional string dnsName = 14;
+  repeated LbListener listeners = 15;
+  repeated LbAvailabilityZone availabilityZones = 16;
+  optional string vpcArn = 17;
+  optional string loadBalancerArn = 18;
+  repeated string securityGroups = 19;
+  repeated string securityGroupsArn = 20;
+  repeated LbAttribute attributes = 21;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.AwsGlobalAccelerator
+message AwsGlobalAccelerator {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional GaIpAddressType ipAddressType = 12;
+  optional bool enabled = 13;
+  repeated GAIpSet ipSets = 14;
+  optional string dnsName = 15;
+  optional GaStatus status = 16;
+  optional int64 lastModifiedTime = 18;
+  optional string dualStackDnsName = 19;
+  repeated GAEvent events = 20;
+  repeated GaListener listeners = 21;
+  optional string acceleratorArn = 22;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.instance.AwsInstance
+message AwsInstance {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string instanceType = 12;
+  optional string privateIpAddress = 13;
+  optional string publicIpAddress = 14;
+  optional string ipv6Address = 15;
+  optional string subnetId = 16;
+  optional string vpcId = 17;
+  optional string azId = 18;
+  repeated string networkInterfaceIds = 19;
+  repeated string networkInterfaceArns = 20;
+  optional string vpcArn = 21;
+  optional string subnetArn = 22;
+  optional string instanceId = 23;
+  optional string privateDnsName = 24;
+  optional string publicDnsName = 25;
+  optional InstanceState state = 26;
+  repeated SecurityGroup securityGroups = 27;
+  repeated string securityGroupsArn = 28;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.managedprefixlist.AwsManagedPrefixList
+message AwsManagedPrefixList {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string prefixListId = 12;
+  optional string addressFamily = 13;
+  optional ManagedPrefixListState state = 14;
+  optional string stateMessage = 15;
+  optional string ownerId = 16;
+  repeated string entries = 17;
+  optional string prefixListArn = 18;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.networkacl.AwsNetworkAcl
+message AwsNetworkAcl {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string vpcId = 12;
+  optional bool isDefault = 13;
+  repeated AclEntry entries = 14;
+  repeated AclAssociation associations = 15;
+  optional string vpcArn = 16;
+  optional string networkAclId = 17;
+  optional string ownerId = 18;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.network.AwsNetworkLoadBalancer
+message AwsNetworkLoadBalancer {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  repeated string enrichedIps = 9;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional LoadBalancerType type = 12;
+  optional string vpcId = 13;
+  optional string dnsName = 14;
+  repeated LbListener listeners = 15;
+  repeated LbAvailabilityZone availabilityZones = 16;
+  optional string vpcArn = 17;
+  optional string loadBalancerArn = 18;
+  repeated string securityGroups = 19;
+  repeated string securityGroupsArn = 20;
+  repeated LbAttribute attributes = 21;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.routetable.AwsRouteTable
+message AwsRouteTable {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  repeated Association associations = 12;
+  repeated Route routes = 13;
+  optional string vpcId = 14;
+  optional string ownerId = 15;
+  optional string vpcArn = 16;
+  optional string routeTableId = 17;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.s3.AwsS3Bucket
+message AwsS3Bucket {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string policy = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.securitygroups.AwsSecurityGroup
+message AwsSecurityGroup {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string description = 12;
+  repeated IpPermission ipPermissions = 13;
+  optional string ownerId = 14;
+  repeated IpPermission ipPermissionsEgress = 15;
+  optional string vpcId = 16;
+  optional string vpcArn = 17;
+  optional string groupId = 18;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.subnet.AwsSubnet
+message AwsSubnet {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string vpcId = 12;
+  optional string azId = 13;
+  optional string availabilityZone = 14;
+  optional string cidrBlock = 15;
+  optional string ownerId = 16;
+  optional SubnetRouteTable routeTable = 17;
+  optional string vpcArn = 18;
+  optional string subnetId = 19;
+  repeated SubnetIpv6CidrBlock ipv6CidrBlockSet = 22;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.targetgroup.AwsTargetGroup
+message AwsTargetGroup {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string vpcId = 12;
+  optional TargetGroupType targetType = 13;
+  repeated string loadBalancersArn = 14;
+  repeated string targets = 15;
+  repeated string targetsAssetIds = 16;
+  optional string vpcArn = 17;
+  optional string targetGroupArn = 18;
+  repeated TargetGroupTarget targetGroupTargets = 19;
+  repeated TargetGroupAttribute attributes = 20;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgateway.AwsTransitGateway
+message AwsTransitGateway {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string transitGatewayId = 12;
+  optional TransitGatewayState state = 13;
+  optional string description = 14;
+  optional string ownerId = 15;
+  optional string transitGatewayArn = 16;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayattachment.AwsTransitGatewayAttachment
+message AwsTransitGatewayAttachment {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string transitGatewayId = 12;
+  optional string transitGatewayOwnerId = 13;
+  optional string resourceOwnerId = 14;
+  optional string resourceId = 16;
+  optional TransitGatewayAttachmentState state = 17;
+  optional TransitGatewayAssociation association = 18;
+  optional int64 creationTime = 19;
+  optional string tgwArn = 20;
+  optional string resourceArn = 21;
+  optional string transitGatewayAttachmentId = 22;
+  optional TgwAttachmentResourceType resourceType = 23;
+  optional string ownerId = 24;
+  optional TgwVpcAttachmentOptions options = 25;
+  repeated string subnetIds = 26;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewaypeeringattachment.AwsTransitGatewayPeeringAttachment
+message AwsTransitGatewayPeeringAttachment {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional TransitGatewayAttachmentState state = 12;
+  optional int64 creationTime = 13;
+  optional string accepterTransitGatewayAttachmentId = 14;
+  optional TgwPeeringStatus status = 15;
+  optional TgwPeeringInfo requesterTgwInfo = 16;
+  optional TgwPeeringInfo accepterTgwInfo = 17;
+  optional string requesterArn = 18;
+  optional string accepterArn = 19;
+  optional string accepterTransitGatewayAttachmentArn = 20;
+  optional string transitGatewayAttachmentId = 21;
+  optional string ownerId = 22;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.AwsTransitGatewayRouteTable
+message AwsTransitGatewayRouteTable {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string transitGatewayId = 12;
+  optional TransitGatewayRouteTableState state = 13;
+  optional bool defaultAssociationRouteTable = 14;
+  optional bool defaultPropagationRouteTable = 15;
+  optional int64 creationTime = 16;
+  repeated TransitGatewayRouteTableAssociation associations = 17;
+  repeated TransitGatewayRouteTablePropagation propagations = 18;
+  repeated TransitGatewayRouteTableRoute routes = 19;
+  optional string transitGatewayRouteTableId = 20;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpc.AwsVpc
+message AwsVpc {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string name = 11;
+  optional string ownerId = 12;
+  optional string cidrBlock = 13;
+  repeated VpcCidrBlockAssociation cidrBlockAssociationSet = 14;
+  repeated VpcIpv6CidrBlockAssociation ipv6CidrBlockAssociationSet = 15;
+  optional string vpcId = 16;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpcendpoints.AwsVpcEndpoint
+message AwsVpcEndpoint {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional VpcEndpointType vpcEndpointType = 11;
+  optional string vpcEndpointId = 12;
+  optional string name = 13;
+  optional string vpcId = 14;
+  optional string serviceName = 15;
+  optional string ownerId = 16;
+  repeated string subnetIds = 17;
+  repeated string networkInterfaceIds = 18;
+  repeated VpcEndpointDnsEntry dnsEntries = 19;
+  optional string vpcArn = 20;
+  repeated string subnetsArn = 21;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpcpeering.AwsVpcPeeringConnection
+message AwsVpcPeeringConnection {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string name = 11;
+  optional string vpcPeeringConnectionId = 12;
+  optional int64 expirationTime = 13;
+  optional VpcPeeringConnectionStateReason vpcPeeringConnectionStateReason = 14;
+  optional VpcInfo requesterVpcInfo = 15;
+  optional VpcInfo accepterVpcInfo = 16;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpngateway.AwsVpnGateway
+message AwsVpnGateway {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string assetId = 10;
+  optional string vpnGatewayId = 11;
+  optional VpnGatewayState state = 12;
+  optional VpnGatewayType vpnGatewayType = 13;
+  optional string availabilityZone = 14;
+  optional int64 amazonSideAsn = 15;
+  repeated VpcAttachment vpcAttachments = 16;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.BackendServerDescription
+message BackendServerDescription {
+  optional int32 instancePort = 10;
+  repeated string policyNames = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.enums.CloudFrontHttpVersion
+enum CloudFrontHttpVersion {
+  CLOUD_FRONT_HTTP_VERSION_HTTP1_1 = 0;
+  CLOUD_FRONT_HTTP_VERSION_HTTP2 = 1;
+  CLOUD_FRONT_HTTP_VERSION_HTTP3 = 2;
+  CLOUD_FRONT_HTTP_VERSION_HTTP2_AND3 = 3;
+  CLOUD_FRONT_HTTP_VERSION_UNKNOWN = 4;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.CloudFrontOrigin
+message CloudFrontOrigin {
+  optional string id = 1;
+  optional string domainName = 2;
+  optional string originPath = 3;
+  repeated CloudFrontOriginCustomHeader customHeadersList = 4;
+  optional CloudFrontOriginCustomConfig customOriginConfig = 5;
+  optional int32 connectionAttempts = 6;
+  optional int32 connectionTimeout = 7;
+  optional CloudFrontOriginShield originShield = 8;
+  optional string originAccessControlId = 9;
+  optional string cname = 10;
+  repeated string enrichedIps = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.CloudFrontOriginCustomConfig
+message CloudFrontOriginCustomConfig {
+  optional int32 httpPort = 1;
+  optional int32 httpsPort = 2;
+  optional CloudFrontOriginProtocolPolicy originProtocolPolicy = 3;
+  repeated CloudFrontOriginSslProtocol cfOriginSslProtocols = 4;
+  optional int32 originReadTimeout = 5;
+  optional int32 originKeepaliveTimeout = 6;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.CloudFrontOriginCustomHeader
+message CloudFrontOriginCustomHeader {
+  optional string headerName = 10;
+  optional string headerValue = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.CloudFrontOriginGeoRestriction
+message CloudFrontOriginGeoRestriction {
+  optional CloudFrontOriginGeoRestrictionType restrictionType = 1;
+  optional int32 quantity = 2;
+  repeated string items = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.enums.CloudFrontOriginGeoRestrictionType
+enum CloudFrontOriginGeoRestrictionType {
+  CLOUD_FRONT_ORIGIN_GEO_RESTRICTION_TYPE_BLACKLIST = 0;
+  CLOUD_FRONT_ORIGIN_GEO_RESTRICTION_TYPE_WHITELIST = 1;
+  CLOUD_FRONT_ORIGIN_GEO_RESTRICTION_TYPE_NONE = 2;
+  CLOUD_FRONT_ORIGIN_GEO_RESTRICTION_TYPE_UNKNOWN = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.enums.CloudFrontOriginProtocolPolicy
+enum CloudFrontOriginProtocolPolicy {
+  CLOUD_FRONT_ORIGIN_PROTOCOL_POLICY_HTTP_ONLY = 0;
+  CLOUD_FRONT_ORIGIN_PROTOCOL_POLICY_MATCH_VIEWER = 1;
+  CLOUD_FRONT_ORIGIN_PROTOCOL_POLICY_HTTPS_ONLY = 2;
+  CLOUD_FRONT_ORIGIN_PROTOCOL_POLICY_UNKNOWN = 3;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.CloudFrontOriginShield
+message CloudFrontOriginShield {
+  optional bool enabled = 1;
+  optional string originShieldRegion = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.enums.CloudFrontOriginSslProtocol
+enum CloudFrontOriginSslProtocol {
+  CLOUD_FRONT_ORIGIN_SSL_PROTOCOL_SSL_V3 = 0;
+  CLOUD_FRONT_ORIGIN_SSL_PROTOCOL_TLS_V1 = 1;
+  CLOUD_FRONT_ORIGIN_SSL_PROTOCOL_TLS_V1_1 = 2;
+  CLOUD_FRONT_ORIGIN_SSL_PROTOCOL_TLS_V1_2 = 3;
+  CLOUD_FRONT_ORIGIN_SSL_PROTOCOL_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.cloudfront.enums.CloudFrontPriceClass
+enum CloudFrontPriceClass {
+  CLOUD_FRONT_PRICE_CLASS_PRICE_CLASS_100 = 0;
+  CLOUD_FRONT_PRICE_CLASS_PRICE_CLASS_200 = 1;
+  CLOUD_FRONT_PRICE_CLASS_PRICE_CLASS_ALL = 2;
+  CLOUD_FRONT_PRICE_CLASS_UNKNOWN = 3;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectvifs.DCBGPPeer
+message DCBGPPeer {
+  optional string bgpPeerId = 10;
+  optional int32 asn = 11;
+  optional string authKey = 12;
+  optional DirectConnectAddressFamily addressFamily = 13;
+  optional string amazonAddress = 14;
+  optional string customerAddress = 15;
+  optional DirectConnectBGPPeerState bgpPeerState = 16;
+  optional DirectConnectBGPStatus bgpStatus = 17;
+  optional string awsDeviceV2 = 18;
+  optional string awsLogicalDeviceId = 19;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectvifs.DCRouteFilterPrefix
+message DCRouteFilterPrefix {
+  optional string cidr = 10;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectvifs.enums.DirectConnectAddressFamily
+enum DirectConnectAddressFamily {
+  DIRECT_CONNECT_ADDRESS_FAMILY_IPV4 = 0;
+  DIRECT_CONNECT_ADDRESS_FAMILY_IPV6 = 1;
+  DIRECT_CONNECT_ADDRESS_FAMILY_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectvifs.enums.DirectConnectBGPPeerState
+enum DirectConnectBGPPeerState {
+  DIRECT_CONNECT_BGP_PEER_STATE_VERIFYING = 0;
+  DIRECT_CONNECT_BGP_PEER_STATE_PENDING = 1;
+  DIRECT_CONNECT_BGP_PEER_STATE_AVAILABLE = 2;
+  DIRECT_CONNECT_BGP_PEER_STATE_DELETING = 3;
+  DIRECT_CONNECT_BGP_PEER_STATE_DELETED = 4;
+  DIRECT_CONNECT_BGP_PEER_STATE_UNKNOWN = 5;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectvifs.enums.DirectConnectBGPStatus
+enum DirectConnectBGPStatus {
+  DIRECT_CONNECT_BGP_PEER_STATUS_UP = 0;
+  DIRECT_CONNECT_BGP_PEER_STATUS_DOWN = 1;
+  DIRECT_CONNECT_BGP_PEER_STATUS_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectconnection.enums.DirectConnectConnectionsState
+enum DirectConnectConnectionsState {
+  DIRECT_CONNECT_CONNECTION_STATE_ORDERING = 0;
+  DIRECT_CONNECT_CONNECTION_STATE_REQUESTED = 1;
+  DIRECT_CONNECT_CONNECTION_STATE_PENDING = 2;
+  DIRECT_CONNECT_CONNECTION_STATE_AVAILABLE = 3;
+  DIRECT_CONNECT_CONNECTION_STATE_DOWN = 4;
+  DIRECT_CONNECT_CONNECTION_STATE_DELETING = 5;
+  DIRECT_CONNECT_CONNECTION_STATE_DELETED = 6;
+  DIRECT_CONNECT_CONNECTION_STATE_REJECTED = 7;
+  DIRECT_CONNECT_CONNECTION_STATE_UNKNOWN = 8;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.enums.DirectConnectGatewayAssociationState
+enum DirectConnectGatewayAssociationState {
+  DIRECT_CONNECT_GATEWAY_ASSOCIATION_ASSOCIATING = 0;
+  DIRECT_CONNECT_GATEWAY_ASSOCIATION_ASSOCIATED = 1;
+  DIRECT_CONNECT_GATEWAY_ASSOCIATION_DISASSOCIATING = 2;
+  DIRECT_CONNECT_GATEWAY_ASSOCIATION_DISASSOCIATED = 3;
+  DIRECT_CONNECT_GATEWAY_ASSOCIATION_UPDATING = 4;
+  DIRECT_CONNECT_GATEWAY_ASSOCIATION_UNKNOWN = 5;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.enums.DirectConnectGatewayAttachmentState
+enum DirectConnectGatewayAttachmentState {
+  DIRECT_CONNECT_GATEWAY_ATTACHMENT_STATE_ATTACHING = 0;
+  DIRECT_CONNECT_GATEWAY_ATTACHMENT_STATE_ATTACHED = 1;
+  DIRECT_CONNECT_GATEWAY_ATTACHMENT_STATE_DETACHING = 2;
+  DIRECT_CONNECT_GATEWAY_ATTACHMENT_STATE_DETACHED = 3;
+  DIRECT_CONNECT_GATEWAY_ATTACHMENT_STATE_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.enums.DirectConnectGatewayAttachmentType
+enum DirectConnectGatewayAttachmentType {
+  DIRECT_CONNECT_GATEWAY_TRANSIT_VIRTUAL_INTERFACE = 0;
+  DIRECT_CONNECT_GATEWAY_PRIVATE_VIRTUAL_INTERFACE = 1;
+  DIRECT_CONNECT_GATEWAY_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.enums.DirectConnectGatewayGatewayType
+enum DirectConnectGatewayGatewayType {
+  DIRECT_CONNECT_GATEWAY_GATEWAY_TYPE_VIRTUAL_PRIVATE_GATEWAY = 0;
+  DIRECT_CONNECT_GATEWAY_GATEWAY_TYPE_TRANSIT_GATEWAY = 1;
+  DIRECT_CONNECT_GATEWAY_GATEWAY_TYPE_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectgateway.enums.DirectConnectGatewayState
+enum DirectConnectGatewayState {
+  DIRECT_CONNECT_GATEWAY_STATE_PENDING = 0;
+  DIRECT_CONNECT_GATEWAY_STATE_AVAILABLE = 1;
+  DIRECT_CONNECT_GATEWAY_STATE_DELETING = 2;
+  DIRECT_CONNECT_GATEWAY_STATE_DELETED = 3;
+  DIRECT_CONNECT_GATEWAY_STATE_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectconnection.enums.DirectConnectHasLogicalRedundancy
+enum DirectConnectHasLogicalRedundancy {
+  DIRECT_CONNECT_HAS_LOGICAL_REDUNDANCY_YES = 0;
+  DIRECT_CONNECT_HAS_LOGICAL_REDUNDANCY_NO = 1;
+  DIRECT_CONNECT_HAS_LOGICAL_REDUNDANCY_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.directconnectvifs.enums.DirectConnectVirtualInterfaceState
+enum DirectConnectVirtualInterfaceState {
+  VIRTUAL_INTERFACE_STATE_CONFIRMING = 0;
+  VIRTUAL_INTERFACE_STATE_VERIFYING = 1;
+  VIRTUAL_INTERFACE_STATE_PENDING = 2;
+  VIRTUAL_INTERFACE_STATE_AVAILABLE = 3;
+  VIRTUAL_INTERFACE_STATE_DOWN = 4;
+  VIRTUAL_INTERFACE_STATE_DELETING = 5;
+  VIRTUAL_INTERFACE_STATE_DELETED = 6;
+  VIRTUAL_INTERFACE_STATE_REJECTED = 7;
+  VIRTUAL_INTERFACE_STATE_UNKNOWN = 8;
+  VIRTUAL_INTERFACE_STATE_UNKNOWN_TO_SDK_VERSION = 9;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayvpcattachment.enums.DnsSupportValue
+enum DnsSupportValue {
+  DNS_SUPPORT_VALUE_ENABLE = 0;
+  DNS_SUPPORT_VALUE_DISABLE = 1;
+  DNS_SUPPORT_VALUE_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.eni.enums.EniStatus
+enum EniStatus {
+  ENI_STATUS_AVAILABLE = 0;
+  ENI_STATUS_ASSOCIATED = 1;
+  ENI_STATUS_ATTACHING = 2;
+  ENI_STATUS_IN_USE = 3;
+  ENI_STATUS_DETACHING = 4;
+  ENI_STATUS_UNKNOWN = 5;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.eni.enums.EniType
+enum EniType {
+  ENI_TYPE_INTERFACE = 0;
+  ENI_TYPE_NAT_GATEWAY = 1;
+  ENI_TYPE_EFA = 2;
+  ENI_TYPE_TRUNK = 3;
+  ENI_TYPE_LOAD_BALANCER = 4;
+  ENI_TYPE_NETWORK_LOAD_BALANCER = 5;
+  VPC_ENDPOINT = 6;
+  ENI_TYPE_BRANCH = 7;
+  ENI_TYPE_TRANSIT_GATEWAY = 8;
+  ENI_TYPE_LAMBDA = 9;
+  ENI_TYPE_QUICKSIGHT = 10;
+  ENI_TYPE_GLOBAL_ACCELERATOR_MANAGED = 11;
+  ENI_TYPE_API_GATEWAY_MANAGED = 12;
+  ENI_TYPE_GATEWAY_LOAD_BALANCER = 13;
+  ENI_TYPE_GATEWAY_LOAD_BALANCER_ENDPOINT = 14;
+  ENI_TYPE_IOT_RULES_MANAGED = 15;
+  ENI_TYPE_AWS_CODESTAR_CONNECTIONS_MANAGED = 16;
+  ENI_TYPE_EC2_INSTANCE_CONNECT_ENDPOINT = 17;
+  ENI_TYPE_EFS = 18;
+  ENI_TYPE_UNKNOWN = 19;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.diff.common.EventType
+enum EventType {
+  CONFIG_CHANGE = 0;
+  AUTOSCALING = 1;
+  IGNORE = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.GAEvent
+message GAEvent {
+  optional string message = 10;
+  optional int64 timestamp = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.GAIpSet
+message GAIpSet {
+  repeated string ipAddresses = 10;
+  optional string ipAddressFamily = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.enums.GaEndpointGroupHealthCheckProtocol
+enum GaEndpointGroupHealthCheckProtocol {
+  GA_ENDPOINT_GROUP_HEALTH_CHECK_PROTOCOL_TCP = 0;
+  GA_ENDPOINT_GROUP_HEALTH_CHECK_PROTOCOL_HTTP = 1;
+  GA_ENDPOINT_GROUP_HEALTH_CHECK_PROTOCOL_HTTPS = 2;
+  GA_ENDPOINT_GROUP_HEALTH_CHECK_PROTOCOL_UNKNOWN = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.enums.GaEndpointHealthState
+enum GaEndpointHealthState {
+  GA_ENDPOINT_HEALTH_STATE_INITIAL = 0;
+  GA_ENDPOINT_HEALTH_STATE_HEALTHY = 1;
+  GA_ENDPOINT_HEALTH_STATE_UNHEALTHY = 2;
+  GA_ENDPOINT_HEALTH_STATE_UNKNOWN = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.enums.GaIpAddressType
+enum GaIpAddressType {
+  GA_IP_ADDRESS_TYPE_IPV4 = 0;
+  GA_IP_ADDRESS_TYPE_DUAL_STACK = 1;
+  GA_IP_ADDRESS_TYPE_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.GaListener
+message GaListener {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string listenerArn = 10;
+  optional GaListenerProtocol protocol = 11;
+  optional GaListenerClientAffinity clientAffinity = 12;
+  repeated GaListenerPortRange portRanges = 13;
+  repeated GaListenerEndpointGroup endpointGroups = 14;
+  optional string assetId = 15;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.enums.GaListenerClientAffinity
+enum GaListenerClientAffinity {
+  GA_LISTENER_CLIENT_AFFINITY_NONE = 0;
+  GA_LISTENER_CLIENT_AFFINITY_SOURCE_IP = 1;
+  GA_LISTENER_CLIENT_AFFINITY_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.GaListenerEndpointDescription
+message GaListenerEndpointDescription {
+  optional string endpointId = 10;
+  optional int32 weight = 11;
+  optional GaEndpointHealthState healthState = 12;
+  optional string healthReason = 13;
+  optional bool clientIPPreservationEnabled = 14;
+  optional string endpointArn = 15;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.GaListenerEndpointGroup
+message GaListenerEndpointGroup {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string endpointGroupArn = 10;
+  optional string endpointGroupRegion = 11;
+  optional float trafficDialPercentage = 12;
+  optional int32 healthCheckPort = 13;
+  optional GaEndpointGroupHealthCheckProtocol healthCheckProtocol = 14;
+  optional string healthCheckPath = 15;
+  optional int32 healthCheckIntervalSeconds = 16;
+  optional int32 thresholdCount = 17;
+  repeated GaListenerEndpointDescription endpointDescriptions = 18;
+  repeated GaPortOverride portOverrides = 19;
+  optional string assetId = 20;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.GaListenerPortRange
+message GaListenerPortRange {
+  optional int32 fromPort = 10;
+  optional int32 toPort = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.enums.GaListenerProtocol
+enum GaListenerProtocol {
+  GA_LISTENER_PROTOCOL_TCP = 0;
+  GA_LISTENER_PROTOCOL_UDP = 1;
+  GA_LISTENER_PROTOCOL_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.GaPortOverride
+message GaPortOverride {
+  optional int32 listenerPort = 10;
+  optional int32 endpointPort = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.globalaccelerators.enums.GaStatus
+enum GaStatus {
+  GA_STATUS_DEPLOYED = 0;
+  GA_STATUS_IN_PROGRESS = 1;
+  GA_STATUS_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.HealthCheck
+message HealthCheck {
+  optional string target = 10;
+  optional int32 interval = 11;
+  optional int32 timeout = 12;
+  optional int32 unhealthyThreshold = 13;
+  optional int32 healthyThreshold = 14;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.instance.InstanceState
+enum InstanceState {
+  RUNNING = 0;
+  STOPPED = 1;
+  TERMINATED = 2;
+  PENDING = 3;
+  SHUTTING_DOWN = 4;
+  STOPPING = 5;
+  UNKNOWN = 6;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.securitygroups.IpPermission
+message IpPermission {
+  optional int32 fromPort = 10;
+  optional string ipProtocol = 11;
+  repeated IpRange ipRanges = 12;
+  repeated IpRange ipv6Ranges = 13;
+  optional int32 toPort = 14;
+  repeated UserIdGroupPair userIdGroupPair = 15;
+  repeated PrefixListId prefixListIds = 16;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.securitygroups.IpRange
+message IpRange {
+  optional string cidrIp = 10;
+  optional string description = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayvpcattachment.enums.Ipv6SupportValue
+enum Ipv6SupportValue {
+  IPV6_SUPPORT_VALUE_ENABLE = 0;
+  IPV6_SUPPORT_VALUE_DISABLE = 1;
+  IPV6_SUPPORT_VALUE_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.LbAdditionalAttribute
+message LbAdditionalAttribute {
+  optional string key = 10;
+  optional string value = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.LbAttribute
+message LbAttribute {
+  optional string key = 10;
+  optional string value = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.LbAttributeAccessLog
+message LbAttributeAccessLog {
+  optional bool enabled = 10;
+  optional string s3BucketName = 11;
+  optional int32 emitInterval = 12;
+  optional string s3BucketPrefix = 13;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.LbAttributeConnectionDraining
+message LbAttributeConnectionDraining {
+  optional bool enabled = 10;
+  optional int32 timeout = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.LbAttributes
+message LbAttributes {
+  optional bool crossZoneLoadBalancing = 10;
+  optional LbAttributeAccessLog accessLog = 11;
+  optional LbAttributeConnectionDraining connectionDraining = 12;
+  repeated LbAdditionalAttribute additionalAttribute = 13;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.LbAvailabilityZone
+message LbAvailabilityZone {
+  optional string zoneName = 10;
+  optional string subnetId = 11;
+  repeated LoadBalancerAddress loadBalancerAddresses = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListener
+message LbListener {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string listenerArn = 10;
+  optional int32 port = 11;
+  optional LbListenerProtocol protocol = 12;
+  repeated LbListenerCertificate certificates = 13;
+  optional string sslPolicy = 14;
+  repeated string alpnPolicy = 15;
+  repeated LbListenerAction defaultActions = 16;
+  optional LbListenerMutualAuthentication mutualAuthentication = 17;
+  repeated LbListenerRule rules = 18;
+  optional string assetId = 19;
+  optional string vpcId = 20;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerAction
+message LbListenerAction {
+  optional string type = 10;
+  optional string targetGroupArn = 11;
+  optional LbListenerAuthenticateOidcActionConfig authenticateOidcConfig = 12;
+  optional LbListenerAuthenticateCognitoActionConfig authenticateCognitoConfig = 13;
+  optional int32 order = 14;
+  optional LbListenerRedirectActionConfig redirectConfig = 15;
+  optional LbListenerFixedResponseActionConfig fixedResponseConfig = 16;
+  optional LbListenerForwardConfig forwardConfig = 17;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerAuthenticateCognitoActionConfig
+message LbListenerAuthenticateCognitoActionConfig {
+  optional string userPoolArn = 10;
+  optional string userPoolClientId = 11;
+  optional string userPoolDomain = 12;
+  optional string sessionCookieName = 13;
+  optional string scope = 14;
+  optional int64 sessionTimeout = 15;
+  optional LbListenerOnUnAuthenticateRequest onUnauthenticatedRequest = 17;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerAuthenticateOidcActionConfig
+message LbListenerAuthenticateOidcActionConfig {
+  optional string issuer = 10;
+  optional string authorizationEndpoint = 11;
+  optional string tokenEndpoint = 12;
+  optional string userInfoEndpoint = 13;
+  optional string clientId = 14;
+  optional string clientSecret = 15;
+  optional string sessionCookieName = 16;
+  optional string scope = 17;
+  optional int64 sessionTimeout = 18;
+  optional LbListenerOnUnAuthenticateRequest onUnauthenticatedRequest = 20;
+  optional bool useExistingClientSecret = 21;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerCertificate
+message LbListenerCertificate {
+  optional string certificateArn = 10;
+  optional bool isDefault = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerFixedResponseActionConfig
+message LbListenerFixedResponseActionConfig {
+  optional string contentType = 10;
+  optional string messageBody = 11;
+  optional string statusCode = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerForwardConfig
+message LbListenerForwardConfig {
+  repeated LbListenerTargetGroupTuple targetGroups = 10;
+  optional LbListenerTargetGroupStickinessConfig stickinessConfig = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerMutualAuthentication
+message LbListenerMutualAuthentication {
+  optional string mode = 10;
+  optional string trustStoreArn = 11;
+  optional bool trustStoreType = 12;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.enums.LbListenerOnUnAuthenticateRequest
+enum LbListenerOnUnAuthenticateRequest {
+  LB_LISTENER_ON_UN_AUTHENTICATE_REQUEST_DENY = 0;
+  LB_LISTENER_ON_UN_AUTHENTICATE_REQUEST_ALLOW = 1;
+  LB_LISTENER_ON_UN_AUTHENTICATE_REQUEST_AUTHENTICATE = 2;
+  LB_LISTENER_ON_UN_AUTHENTICATE_REQUEST_UNKNOWN = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.enums.LbListenerProtocol
+enum LbListenerProtocol {
+  LB_LISTENER_PROTOCOL_HTTP = 0;
+  LB_LISTENER_PROTOCOL_HTTPS = 1;
+  LB_LISTENER_PROTOCOL_TCP = 2;
+  LB_LISTENER_PROTOCOL_TLS = 3;
+  LB_LISTENER_PROTOCOL_UDP = 4;
+  LB_LISTENER_PROTOCOL_TCP_UDP = 5;
+  LB_LISTENER_PROTOCOL_GENEVE = 6;
+  LB_LISTENER_PROTOCOL_UNKNOWN = 7;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerRedirectActionConfig
+message LbListenerRedirectActionConfig {
+  optional string protocol = 10;
+  optional string port = 11;
+  optional string host = 12;
+  optional string path = 13;
+  optional string query = 14;
+  optional LbListenerRedirectActionConfigStatusCode statusCode = 15;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.enums.LbListenerRedirectActionConfigStatusCode
+enum LbListenerRedirectActionConfigStatusCode {
+  LB_LISTENER_REDIRECT_ACTION_CONFIG_STATUS_CODE_HTTP_301 = 0;
+  LB_LISTENER_REDIRECT_ACTION_CONFIG_STATUS_CODE_HTTP_302 = 1;
+  LB_LISTENER_REDIRECT_ACTION_CONFIG_STATUS_CODE_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.rule.LbListenerRule
+message LbListenerRule {
+  optional string accountId = 1;
+  optional string awsRegion = 2;
+  repeated Tag tags = 3;
+  optional int64 createdTime = 4;
+  optional string ruleArn = 10;
+  optional string priority = 11;
+  repeated LbListenerRuleCondition conditions = 12;
+  repeated LbListenerAction actions = 13;
+  optional bool isDefault = 14;
+  optional string assetId = 15;
+  optional string vpcId = 16;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.rule.LbListenerRuleCondition
+message LbListenerRuleCondition {
+  optional string field = 10;
+  repeated string values = 11;
+  repeated string hostHeaderConfig = 12;
+  repeated string pathPatternConfig = 13;
+  optional LbListenerRuleConditionHttpHeaderConditionConfig httpHeaderConfig = 14;
+  repeated LbListenerRuleKeyValuePair queryStringConfig = 15;
+  repeated string httpRequestMethodConfig = 16;
+  repeated string sourceIpConfig = 17;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.rule.LbListenerRuleConditionHttpHeaderConditionConfig
+message LbListenerRuleConditionHttpHeaderConditionConfig {
+  optional string httpHeaderName = 10;
+  repeated string values = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.rule.LbListenerRuleKeyValuePair
+message LbListenerRuleKeyValuePair {
+  optional string key = 10;
+  optional string value = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerTargetGroupStickinessConfig
+message LbListenerTargetGroupStickinessConfig {
+  optional bool enabled = 10;
+  optional int32 durationInSeconds = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.listener.LbListenerTargetGroupTuple
+message LbListenerTargetGroupTuple {
+  optional string targetGroupArn = 10;
+  optional int32 weight = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.Listener
+message Listener {
+  optional int32 loadBalancerPort = 10;
+  optional string instanceProtocol = 11;
+  optional int32 instancePort = 12;
+  optional string protocol = 13;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.ListenerDescription
+message ListenerDescription {
+  optional Listener listener = 10;
+  repeated string policyNames = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.LoadBalancerAddress
+message LoadBalancerAddress {
+  optional string ipAddress = 10;
+  optional string allocationId = 11;
+  optional string privateIPv4Address = 12;
+  optional string iPv6Address = 13;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.LoadBalancerType
+enum LoadBalancerType {
+  LOAD_BALANCER_TYPE_APPLICATION = 0;
+  LOAD_BALANCER_TYPE_NETWORK = 1;
+  LOAD_BALANCER_TYPE_GATEWAY = 2;
+  LOAD_BALANCER_TYPE_UNKNOWN = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.managedprefixlist.ManagedPrefixListState
+enum ManagedPrefixListState {
+  MANAGED_PREFIX_LIST_STATE_CREATE_IN_PROGRESS = 0;
+  MANAGED_PREFIX_LIST_STATE_CREATE_COMPLETE = 1;
+  MANAGED_PREFIX_LIST_STATE_CREATE_FAILED = 2;
+  MANAGED_PREFIX_LIST_STATE_MODIFY_IN_PROGRESS = 3;
+  MANAGED_PREFIX_LIST_STATE_MODIFY_COMPLETE = 4;
+  MANAGED_PREFIX_LIST_STATE_MODIFY_FAILED = 5;
+  MANAGED_PREFIX_LIST_STATE_RESTORE_IN_PROGRESS = 6;
+  MANAGED_PREFIX_LIST_STATE_RESTORE_COMPLETE = 7;
+  MANAGED_PREFIX_LIST_STATE_RESTORE_FAILED = 8;
+  MANAGED_PREFIX_LIST_STATE_DELETE_IN_PROGRESS = 9;
+  MANAGED_PREFIX_LIST_STATE_DELETE_COMPLETE = 10;
+  MANAGED_PREFIX_LIST_STATE_DELETE_FAILED = 11;
+  MANAGED_PREFIX_LIST_STATE_UNKNOWN = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.securitygroups.PrefixListId
+message PrefixListId {
+  optional string prefixListId = 11;
+  optional string description = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.routetable.Route
+message Route {
+  optional string destinationCidrBlock = 10;
+  optional string destinationIpv6CidrBlock = 11;
+  optional string destinationPrefixListId = 12;
+  optional string egressOnlyInternetGatewayId = 13;
+  optional string gatewayId = 14;
+  optional string instanceId = 15;
+  optional string instanceOwnerId = 16;
+  optional string natGatewayId = 17;
+  optional string transitGatewayId = 18;
+  optional string localGatewayId = 19;
+  optional string carrierGatewayId = 20;
+  optional string networkInterfaceId = 21;
+  optional RouteTableRouteOrigin origin = 22;
+  optional RouteTableRouteState state = 23;
+  optional string vpcPeeringConnectionId = 24;
+  optional string coreNetworkArn = 25;
+  optional string destinationArn = 26;
+  optional string destinationCidrArn = 27;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.routetable.RouteTableAssociationState
+enum RouteTableAssociationState {
+  ROUTE_TABLE_ASSOCIATION_ASSOCIATING = 0;
+  ROUTE_TABLE_ASSOCIATION_ASSOCIATED = 1;
+  ROUTE_TABLE_ASSOCIATION_DISASSOCIATING = 2;
+  ROUTE_TABLE_ASSOCIATION_DISASSOCIATED = 3;
+  ROUTE_TABLE_ASSOCIATION_FAILED = 4;
+  ROUTE_TABLE_ASSOCIATION_UNKNOWN = 5;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.routetable.RouteTableAssociationStateCode
+message RouteTableAssociationStateCode {
+  optional RouteTableAssociationState state = 10;
+  optional string statusMessage = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.routetable.RouteTableRouteOrigin
+enum RouteTableRouteOrigin {
+  ROUTE_TABLE_ROUTE_ORIGIN_CREATE_ROUTE_TABLE = 0;
+  ROUTE_TABLE_ROUTE_ORIGIN_CREATE_ROUTE = 1;
+  ROUTE_TABLE_ROUTE_ORIGIN_ENABLE_VGW_ROUTE_PROPAGATION = 2;
+  ROUTE_TABLE_ROUTE_ORIGIN_UNKNOWN = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.routetable.RouteTableRouteState
+enum RouteTableRouteState {
+  ROUTE_TABLE_ROUTE_STATE_ACTIVE = 0;
+  ROUTE_TABLE_ROUTE_STATE_BLACKHOLE = 1;
+  ROUTE_TABLE_ROUTE_STATE_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.util.securitygroups.SecurityGroup
+message SecurityGroup {
+  optional string groupId = 10;
+  optional string groupName = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayvpcattachment.enums.SecurityGroupReferencingSupportValue
+enum SecurityGroupReferencingSupportValue {
+  SECURITY_GROUP_REFERENCING_SUPPORT_VALUE_ENABLE = 0;
+  SECURITY_GROUP_REFERENCING_SUPPORT_VALUE_DISABLE = 1;
+  SECURITY_GROUP_REFERENCING_SUPPORT_VALUE_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.handler.post.processor.snapshot.model.SnapshotEventType
+message SnapshotEventType {
+  optional string assetId = 10;
+  optional EventType eventType = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.handler.post.processor.snapshot.model.SnapshotEvents
+message SnapshotEvents {
+  repeated SnapshotEventType created = 1;
+  repeated SnapshotEventType updated = 2;
+  repeated SnapshotEventType deleted = 3;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.handler.post.processor.snapshot.model.SnapshotModelsAssets
+message SnapshotModelsAssets {
+  repeated AwsGlobalAccelerator globalAccelerators = 10;
+  repeated AwsInstance instances = 11;
+  repeated AwsApplicationLoadBalancer applicationLoadBalancers = 12;
+  repeated AwsNetworkLoadBalancer networkLoadBalancers = 13;
+  repeated AwsClassicLoadBalancer classicLoadBalancers = 14;
+  repeated AwsTargetGroup targetGroups = 15;
+  repeated AwsEni interfaces = 16;
+  repeated AwsSubnet subnets = 17;
+  repeated AwsVpc vpcs = 18;
+  repeated AwsRouteTable routeTables = 19;
+  repeated AwsNetworkAcl networkAcls = 20;
+  repeated AwsSecurityGroup securityGroups = 21;
+  repeated AwsTransitGateway transitGateways = 22;
+  repeated AwsTransitGatewayAttachment transitGatewayAttachments = 23;
+  repeated AwsTransitGatewayRouteTable transitGatewayRouteTables = 24;
+  repeated AwsTransitGatewayPeeringAttachment transitGatewayPeeringAttachments = 25;
+  repeated AwsManagedPrefixList managedPrefixLists = 26;
+  repeated AwsVpcEndpoint vpcEndpoints = 27;
+  repeated LbListener lbListeners = 28;
+  repeated LbListenerRule lbListenerRules = 29;
+  repeated GaListener gaListeners = 30;
+  repeated GaListenerEndpointGroup gaListenerEndpointGroups = 31;
+  repeated AwsDirectConnectGateway awsDirectConnectGateway = 32;
+  repeated AwsVpnGateway vpnGateways = 33;
+  repeated AwsDirectConnectVirtualInterface directConnectVirtualInterfaces = 34;
+  repeated AwsGatewayLoadBalancer gatewayLoadBalancers = 36;
+  repeated AwsVpcPeeringConnection vpcPeeringConnections = 37;
+  repeated AwsCloudFront cloudFrontDistributions = 38;
+  repeated AwsS3Bucket s3Buckets = 39;
+  repeated AwsDirectConnectConnection directConnectConnections = 40;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.handler.post.processor.snapshot.model.SnapshotModelsEvents
+message SnapshotModelsEvents {
+  optional SnapshotEvents globalAccelerators = 10;
+  optional SnapshotEvents instances = 11;
+  optional SnapshotEvents applicationLoadBalancers = 12;
+  optional SnapshotEvents networkLoadBalancers = 13;
+  optional SnapshotEvents classicLoadBalancers = 14;
+  optional SnapshotEvents targetGroups = 15;
+  optional SnapshotEvents interfaces = 16;
+  optional SnapshotEvents subnets = 17;
+  optional SnapshotEvents vpcs = 18;
+  optional SnapshotEvents routeTables = 19;
+  optional SnapshotEvents networkAcls = 20;
+  optional SnapshotEvents securityGroups = 21;
+  optional SnapshotEvents transitGateways = 22;
+  optional SnapshotEvents transitGatewayAttachments = 23;
+  optional SnapshotEvents transitGatewayRouteTables = 24;
+  optional SnapshotEvents transitGatewayPeeringAttachments = 25;
+  optional SnapshotEvents managedPrefixLists = 26;
+  optional SnapshotEvents vpcEndpoints = 27;
+  optional SnapshotEvents lbListeners = 28;
+  optional SnapshotEvents lbListenerRules = 29;
+  optional SnapshotEvents gaListeners = 30;
+  optional SnapshotEvents gaListenerEndpointGroups = 31;
+  optional SnapshotEvents awsDirectConnectGateway = 32;
+  optional SnapshotEvents vpnGateways = 33;
+  optional SnapshotEvents directConnectVirtualInterfaces = 34;
+  optional SnapshotEvents gatewayLoadBalancers = 36;
+  optional SnapshotEvents vpcPeeringConnections = 37;
+  optional SnapshotEvents cloudFrontDistributions = 38;
+  optional SnapshotEvents s3Buckets = 39;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.loadbalancer.classic.SourceSecurityGroup
+message SourceSecurityGroup {
+  optional string ownerAlias = 10;
+  optional string groupName = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.subnet.enums.SubnetCidrBlockState
+enum SubnetCidrBlockState {
+  SUBNET_CIDR_BLOCK_STATE_ASSOCIATING = 0;
+  SUBNET_CIDR_BLOCK_STATE_ASSOCIATED = 1;
+  SUBNET_CIDR_BLOCK_STATE_DISASSOCIATING = 2;
+  SUBNET_CIDR_BLOCK_STATE_DISASSOCIATED = 3;
+  SUBNET_CIDR_BLOCK_STATE_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.subnet.enums.SubnetIpSource
+enum SubnetIpSource {
+  SUBNET_IP_SOURCE_AMAZON = 0;
+  SUBNET_IP_SOURCE_BYOIP = 1;
+  SUBNET_IP_SOURCE_NONE = 2;
+  SUBNET_IP_SOURCE_UNKNOWN = 3;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.subnet.enums.SubnetIpv6AddressAttribute
+enum SubnetIpv6AddressAttribute {
+  SUBNET_IPV6_ADDRESS_ATTRIBUTE_PUBLIC = 0;
+  SUBNET_IPV6_ADDRESS_ATTRIBUTE_PRIVATE = 1;
+  SUBNET_IPV6_ADDRESS_ATTRIBUTE_UNKNOWN = 2;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.subnet.SubnetIpv6CidrBlock
+message SubnetIpv6CidrBlock {
+  optional string associationId = 10;
+  optional string ipv6CidrBlock = 11;
+  optional SubnetCidrBlockState subnetCidrBlockState = 12;
+  optional string statusMessage = 13;
+  optional SubnetIpv6AddressAttribute ipv6AddressAttribute = 14;
+  optional SubnetIpSource ipSource = 15;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.subnet.SubnetRouteTable
+message SubnetRouteTable {
+  optional string routeTableId = 10;
+  optional string ownerId = 11;
+  optional string routeTableArn = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.tag.Tag
+message Tag {
+  optional string key = 10;
+  optional string value = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.targetgroup.TargetGroupAttribute
+message TargetGroupAttribute {
+  optional string key = 10;
+  optional string value = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.targetgroup.TargetGroupHealthState
+enum TargetGroupHealthState {
+  TARGET_GROUP_HEALTH_STATE_INITIAL = 0;
+  TARGET_GROUP_HEALTH_STATE_HEALTHY = 1;
+  TARGET_GROUP_HEALTH_STATE_UNHEALTHY = 2;
+  TARGET_GROUP_HEALTH_STATE_UNHEALTHY_DRAINING = 3;
+  TARGET_GROUP_HEALTH_STATE_UNUSED = 4;
+  TARGET_GROUP_HEALTH_STATE_DRAINING = 5;
+  TARGET_GROUP_HEALTH_STATE_UNAVAILABLE = 6;
+  TARGET_GROUP_HEALTH_STATE_UNKNOWN = 7;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.targetgroup.TargetGroupTarget
+message TargetGroupTarget {
+  optional string id = 10;
+  optional int32 port = 11;
+  optional string availabilityZone = 12;
+  optional TargetGroupHealthState state = 13;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.targetgroup.TargetGroupType
+enum TargetGroupType {
+  TARGET_GROUP_TYPE_INSTANCE = 0;
+  TARGET_GROUP_TYPE_IP = 1;
+  TARGET_GROUP_TYPE_LAMBDA = 2;
+  TARGET_GROUP_TYPE_ALB = 3;
+  TARGET_GROUP_TYPE_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayattachment.TgwAttachmentResourceType
+enum TgwAttachmentResourceType {
+  TGW_RESOURCE_TYPE_VPC = 0;
+  TGW_RESOURCE_TYPE_VPN = 1;
+  TGW_RESOURCE_TYPE_DIRECT_CONNECT_GATEWAY = 2;
+  TGW_RESOURCE_TYPE_CONNECT = 3;
+  TGW_RESOURCE_TYPE_PEERING = 4;
+  TGW_RESOURCE_TYPE_TGW_PEERING = 5;
+  TGW_RESOURCE_TYPE_UNKNOWN = 6;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewaypeeringattachment.TgwPeeringInfo
+message TgwPeeringInfo {
+  optional string transitGatewayId = 10;
+  optional string ownerId = 11;
+  optional string region = 12;
+  optional string coreNetworkId = 13;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewaypeeringattachment.TgwPeeringStatus
+message TgwPeeringStatus {
+  optional string code = 10;
+  optional string message = 11;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayvpcattachment.TgwVpcAttachmentOptions
+message TgwVpcAttachmentOptions {
+  optional DnsSupportValue dnsSupport = 10;
+  optional SecurityGroupReferencingSupportValue securityGroupReferencingSupport = 11;
+  optional Ipv6SupportValue ipv6Support = 12;
+  optional ApplianceModeSupportValue applianceModeSupport = 13;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayattachment.TransitGatewayAssociation
+message TransitGatewayAssociation {
+  optional string transitGatewayRouteTableId = 10;
+  optional TransitGatewayAssociationState state = 11;
+  optional string transitGatewayRouteTableArn = 12;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayattachment.TransitGatewayAssociationState
+enum TransitGatewayAssociationState {
+  TGW_ASSOCIATION_ASSOCIATING = 0;
+  TGW_ASSOCIATION_ASSOCIATED = 1;
+  TGW_ASSOCIATION_DISASSOCIATING = 2;
+  TGW_ASSOCIATION_DISASSOCIATED = 3;
+  TGW_ASSOCIATION_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayattachment.TransitGatewayAttachmentState
+enum TransitGatewayAttachmentState {
+  TGW_ATTACH_STATE_INITIATING = 0;
+  TGW_ATTACH_STATE_INITIATING_REQUEST = 1;
+  TGW_ATTACH_STATE_PENDING_ACCEPTANCE = 2;
+  TGW_ATTACH_STATE_ROLLING_BACK = 3;
+  TGW_ATTACH_STATE_PENDING = 4;
+  TGW_ATTACH_STATE_AVAILABLE = 5;
+  TGW_ATTACH_STATE_MODIFYING = 6;
+  TGW_ATTACH_STATE_DELETING = 7;
+  TGW_ATTACH_STATE_DELETED = 8;
+  TGW_ATTACH_STATE_FAILED = 9;
+  TGW_ATTACH_STATE_REJECTED = 10;
+  TGW_ATTACH_STATE_REJECTING = 11;
+  TGW_ATTACH_STATE_FAILING = 12;
+  TGW_ATTACH_STATE_UNKNOWN = 13;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.TransitGatewayRouteTableAssociation
+message TransitGatewayRouteTableAssociation {
+  optional string transitGatewayAttachmentId = 10;
+  optional string resourceId = 11;
+  optional TransitGatewayRouteTableAttachmentResourceType resourceType = 12;
+  optional TransitGatewayRouteTableAssociationState state = 13;
+  optional string transitGatewayAttachmentArn = 14;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.enums.TransitGatewayRouteTableAssociationState
+enum TransitGatewayRouteTableAssociationState {
+  TGW_RT_ASSOCIATION_STATE_ASSOCIATING = 0;
+  TGW_RT_ASSOCIATION_STATE_ASSOCIATED = 1;
+  TGW_RT_ASSOCIATION_STATE_DISASSOCIATING = 2;
+  TGW_RT_ASSOCIATION_STATE_DISASSOCIATED = 3;
+  TGW_RT_ASSOCIATION_STATE_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.enums.TransitGatewayRouteTableAttachmentResourceType
+enum TransitGatewayRouteTableAttachmentResourceType {
+  TGW_RT_RESOURCE_TYPE_VPC = 0;
+  TGW_RT_RESOURCE_TYPE_VPN = 1;
+  TGW_RT_RESOURCE_TYPE_DIRECT_CONNECT_GATEWAY = 2;
+  TGW_RT_RESOURCE_TYPE_CONNECT = 3;
+  TGW_RT_RESOURCE_TYPE_PEERING = 4;
+  TGW_RT_RESOURCE_TYPE_TGW_PEERING = 5;
+  TGW_RT_RESOURCE_TYPE_UNKNOWN = 6;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.TransitGatewayRouteTablePropagation
+message TransitGatewayRouteTablePropagation {
+  optional string transitGatewayAttachmentId = 10;
+  optional string resourceId = 11;
+  optional TransitGatewayRouteTableAttachmentResourceType resourceType = 12;
+  optional TransitGatewayRouteTablePropagationState state = 13;
+  optional string transitGatewayRouteTableAnnouncementId = 14;
+  optional string transitGatewayAttachmentArn = 15;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.enums.TransitGatewayRouteTablePropagationState
+enum TransitGatewayRouteTablePropagationState {
+  TGW_RT_PROPAGATION_STATE_ENABLING = 0;
+  TGW_RT_PROPAGATION_STATE_ENABLED = 1;
+  TGW_RT_PROPAGATION_STATE_DISABLING = 2;
+  TGW_RT_PROPAGATION_STATE_DISABLED = 3;
+  TGW_RT_PROPAGATION_STATE_UNKNOWN = 4;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.TransitGatewayRouteTableRoute
+message TransitGatewayRouteTableRoute {
+  optional string destinationCidrBlock = 10;
+  optional string prefixListId = 11;
+  optional string transitGatewayRouteTableAnnouncementId = 12;
+  repeated TransitGatewayRouteTableRouteAttachment transitGatewayAttachments = 13;
+  optional TransitGatewayRouteTableRouteType type = 14;
+  optional TransitGatewayRouteTableRouteState state = 15;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.TransitGatewayRouteTableRouteAttachment
+message TransitGatewayRouteTableRouteAttachment {
+  optional string resourceId = 10;
+  optional string transitGatewayAttachmentId = 11;
+  optional TransitGatewayRouteTableAttachmentResourceType resourceType = 12;
+  optional string transitGatewayAttachmentArn = 13;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.enums.TransitGatewayRouteTableRouteState
+enum TransitGatewayRouteTableRouteState {
+  TGW_RT_ROUTE_STATE_PENDING = 0;
+  TGW_RT_ROUTE_STATE_ACTIVE = 1;
+  TGW_RT_ROUTE_STATE_BLACKHOLE = 2;
+  TGW_RT_ROUTE_STATE_DELETING = 3;
+  TGW_RT_ROUTE_STATE_DELETED = 4;
+  TGW_RT_ROUTE_STATE_UNKNOWN = 5;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.enums.TransitGatewayRouteTableRouteType
+enum TransitGatewayRouteTableRouteType {
+  TGW_RT_ROUTE_TYPE_STATIC = 0;
+  TGW_RT_ROUTE_TYPE_PROPAGATED = 1;
+  TGW_RT_ROUTE_TYPE_UNKNOWN = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgatewayrouterable.enums.TransitGatewayRouteTableState
+enum TransitGatewayRouteTableState {
+  TGW_RT_STATE_PENDING = 0;
+  TGW_RT_STATE_AVAILABLE = 1;
+  TGW_RT_STATE_DELETING = 2;
+  TGW_RT_STATE_DELETED = 3;
+  TGW_RT_STATE_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.transitgateway.TransitGatewayState
+enum TransitGatewayState {
+  TGW_STATE_PENDING = 0;
+  TGW_STATE_AVAILABLE = 1;
+  TGW_STATE_MODIFYING = 2;
+  TGW_STATE_DELETING = 3;
+  TGW_STATE_DELETED = 4;
+  TGW_STATE_UNKNOWN = 5;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.securitygroups.UserIdGroupPair
+message UserIdGroupPair {
+  optional string description = 10;
+  optional string groupId = 11;
+  optional string groupName = 12;
+  optional string peeringStatus = 13;
+  optional string userId = 14;
+  optional string vpcId = 15;
+  optional string vpcPeeringConnectionId = 16;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpngateway.VpcAttachment
+message VpcAttachment {
+  optional VpcAttachmentStatus state = 10;
+  optional string vpcId = 11;
+  optional string vpcArn = 12;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.vpngateway.enums.VpcAttachmentStatus
+enum VpcAttachmentStatus {
+  ATTACHMENT_STATUS_ATTACHING = 0;
+  ATTACHMENT_STATUS_ATTACHED = 1;
+  ATTACHMENT_STATUS_DETACHING = 2;
+  ATTACHMENT_STATUS_DETACHED = 3;
+  ATTACHMENT_STATUS_UNKNOWN = 4;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpc.VpcCidrBlockAssociation
+message VpcCidrBlockAssociation {
+  optional string associationId = 10;
+  optional string cidrBlock = 11;
+  optional VpcCidrBlockAssociationState cidrBlockState = 12;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpc.VpcCidrBlockAssociationState
+message VpcCidrBlockAssociationState {
+  optional VpcCidrBlockAssociationStateCode state = 10;
+  optional string statusMessage = 11;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.vpc.VpcCidrBlockAssociationStateCode
+enum VpcCidrBlockAssociationStateCode {
+  VPC_CIDR_BLOCK_STATE_ASSOCIATING = 0;
+  VPC_CIDR_BLOCK_STATE_ASSOCIATED = 1;
+  VPC_CIDR_BLOCK_STATE_DISASSOCIATING = 2;
+  VPC_CIDR_BLOCK_STATE_DISASSOCIATED = 3;
+  VPC_CIDR_BLOCK_STATE_FAILING = 4;
+  VPC_CIDR_BLOCK_STATE_FAILED = 5;
+  VPC_CIDR_BLOCK_STATE_UNKNOWN = 6;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpcendpoints.VpcEndpointDnsEntry
+message VpcEndpointDnsEntry {
+  optional string dnsName = 1;
+  optional string hostedZoneId = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.vpcendpoints.VpcEndpointType
+enum VpcEndpointType {
+  VPC_ENDPOINT_TYPE_INTERFACE = 0;
+  VPC_ENDPOINT_TYPE_GATEWAY = 1;
+  VPC_ENDPOINT_TYPE_GATEWAY_LOAD_BALANCER = 2;
+  VPC_ENDPOINT_TYPE_UNKNOWN = 3;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpcpeering.VpcInfo
+message VpcInfo {
+  optional string cidrBlock = 1;
+  repeated string ipv6CidrBlockSet = 2;
+  repeated string cidrBlockSet = 3;
+  optional string ownerId = 4;
+  optional string vpcId = 5;
+  optional string regionId = 6;
+  optional string vpcArn = 7;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpc.VpcIpv6CidrBlockAssociation
+message VpcIpv6CidrBlockAssociation {
+  optional string associationId = 10;
+  optional string ipv6CidrBlock = 11;
+  optional VpcCidrBlockAssociationState ipv6CidrBlockState = 12;
+  optional string ipv6Pool = 13;
+  optional string networkBorderGroup = 14;
+}
+// Message for com.thousandeyes.cloudmonitoring.inventory.repos.vpcpeering.VpcPeeringConnectionStateReason
+message VpcPeeringConnectionStateReason {
+  optional VpcPeeringConnectionStateReasonCode code = 1;
+  optional string message = 2;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.vpcpeering.VpcPeeringConnectionStateReasonCode
+enum VpcPeeringConnectionStateReasonCode {
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_INITIATING_REQUEST = 0;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_PENDING_ACCEPTANCE = 1;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_ACTIVE = 2;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_DELETED = 3;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_REJECTED = 4;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_FAILED = 5;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_EXPIRED = 6;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_PROVISIONING = 7;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_DELETING = 8;
+  VPC_PEERING_CONNECTION_STATE_REASON_CODE_UNKNOWN = 9;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.vpngateway.enums.VpnGatewayState
+enum VpnGatewayState {
+  VPN_GATEWAY_STATE_PENDING = 0;
+  VPN_GATEWAY_STATE_AVAILABLE = 1;
+  VPN_GATEWAY_STATE_DELETING = 2;
+  VPN_GATEWAY_STATE_DELETED = 3;
+  VPN_GATEWAY_STATE_UNKNOWN = 4;
+}
+// Enum for com.thousandeyes.cloudmonitoring.inventory.repos.vpngateway.enums.VpnGatewayType
+enum VpnGatewayType {
+  VPN_GATEWAY_TYPE_IPSEC_1 = 0;
+  VPN_GATEWAY_TYPE_UNKNOWN = 1;
+}

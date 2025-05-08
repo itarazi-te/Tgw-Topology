@@ -1,0 +1,15 @@
+syntax = "proto3";
+import "te/service/cm/v1/cm_snapshot.proto";
+import "te/service/cm/v1/cm_azr_snapshot.proto";
+// unused
+package te.service.cm.v1;
+
+option java_multiple_files = true;
+option java_package = "com.thousandeyes.service.cm.v1";
+
+// indexes here need to match 
+// com/thousandeyes/cloudmonitoring/inventory/handler/post/processor/snapshot/model/SnapshotFilesResponse.java
+message SnapshotFilesResponse {
+  repeated AssetsSnapshot snapshot = 2;
+  repeated te.service.cm.azr.v1.AzrAssetsSnapshot azr_snapshot = 3;
+}

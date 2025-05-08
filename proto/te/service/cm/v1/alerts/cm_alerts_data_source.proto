@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package te.service.cm.v1.alerts;
+option java_package = "com.thousandeyes.service.cm.v1.alerts";
+
+// this is version 0 of the data source message - will be removed once version 1 is stable
+message CloudMonitoringDataSource {
+  int64 eventTsMs          = 1;   // [epoch millis] beginning of aggregation interval
+  string aid               = 11;  // customer account id
+  string scopeType         = 2;   // account, region, az, vpc, subnet
+  string scopeId           = 3;   // account-id, region-id, az-id, vpc-id, subnet-id
+  reserved 4, 5, 6;
+  int32 version = 7;            // version of the data source message
+  reserved  8, 9, 10;
+  double cps               = 12;  // [connections/sec] new connections rate in the current interval
+  double inboundBps        = 13;  // [bits/sec] throughput coming into the scope
+  double insideCloudBps    = 14;  // [bits/sec] throughput from the scope to the rest of the customer's cloud
+  double outboundBps       = 15;  // [bits/sec] throughput going out of the scope
+  double outsideCloudBps   = 16;  // [bits/sec] throughput from the scope to outside the customer's cloud
+  double rejectedBps       = 17;  // [bits/sec] rejected throughput
+  double totalBps          = 18;  // [bits/sec] all non-rejected (i.e., accepted) throughput
+}
+
+
+// this is version 1 of the data source message
+message CloudInsightsDatapointsEntry {
+  string key              = 1;    // observer_id
+  repeated double vals    = 2;    // list of values for the metrics (order should match the order of the metrics in the CloudInsightsDatapoints message)
+}
+
+message CloudInsightsDatapoints {
+  string aid                              = 1;    // customer account id
+  string scope                            = 2;    // account, region, az, vpc, subnet
+  string sep                              = 3;    // separator of multi-key
+  int64 eventTsMs                         = 4;    // [epoch millis] beginning of aggregation interval
+  repeated string metrics                 = 5;    // list of metrics, i.e. ["cps", "totalKbps", ...]
+  repeated CloudInsightsDatapointsEntry entries  = 6 ;   // list of datapoints entries
+  int32 version                           = 7;    // version of the data source message
+}

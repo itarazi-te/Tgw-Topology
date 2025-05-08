@@ -1,0 +1,164 @@
+syntax = "proto3";
+import "google/protobuf/struct.proto";
+import "te/service/cm/v1/cm_snapshot_file_response.proto";
+import "te/service/cm/v1/cm_snapshot.proto";
+import "te/service/cm/v1/cm_azr_snapshot.proto";
+
+option java_multiple_files = true;
+option java_package = "com.thousandeyes.service.cm.v1";
+package te.service.cm.v1;
+
+enum MetricType {
+  ACCEPTED_THROUGHPUT = 0;
+  REJECTED_THROUGHPUT = 1;
+  ACCEPTED_CONNECTIONS = 2;
+  REJECTED_CONNECTIONS = 3;
+}
+
+// The Inventory service definition.
+service CMCommonService {
+  // Get AWS Snapshot file for the given account and partition
+  rpc GetSnapshotFile (SnapshotFilesRequest) returns (stream SnapshotFilesResponse);
+  // Get ingress and egress metrics for the given asset ids
+  rpc GetAssetsMetrics (AssetsByIdsOvertimeRequest) returns (AssetMetricsOvertimeResponse);
+  //Get Assets by ids
+  rpc GetAssets (AssetsByIdsRequest) returns (stream AssetResponse);
+}
+
+// Request message for get Snapshot Files
+message SnapshotFilesRequest {
+  optional string aid = 1; // required - Account ID
+  repeated string partition = 2; // Partition name as get from Kafka ,message (e.g. region-name,account-id , time...)
+}
+
+// Request message for get Assets metrics by Ids
+message AssetsByIdsRequest {
+  optional string aid = 1; // required - Account ID
+  optional int64  timestamp_sec = 2; // required - Timestamp in seconds
+  optional int32 interval_sec = 3; // required for GetAssetsMetrics A The interval/duration for take the data .. i.e 300 sec will get aggregated data for timestamp to timestamp+300
+  repeated string asset_ids = 4; // List of asset IDs/ARNs
+}
+
+// Request message for get Assets metrics by Ids over time
+message AssetsByIdsOvertimeRequest {
+  optional string aid = 1; // required - Account ID
+  optional int64  start_timestamp_sec = 2; // required - start Timestamp in seconds
+  optional int64 end_timestamp_sec = 3; // required - end Timestamp in seconds
+  optional int32 interval_sec = 4; // required for GetAssetsMetrics A The interval/duration for take the data .. i.e 300 sec will get aggregated data for timestamp to timestamp+300
+  repeated string asset_ids = 5; // List of asset IDs/ARNs
+  repeated MetricType metric_types = 6; // List of MetricType
+}
+
+message AssetMetricsOvertimeResponse {
+  repeated AssetMetricsOvertime asset_metrics_overtime = 1;
+}
+
+message AssetMetricsOvertime {
+  optional string asset_id = 1; // required - Asset ID/ARN
+  repeated AssetMetricsBucket asset_metrics_bucket = 2; // required - External metrics
+}
+
+message AssetMetricsBucket {
+  optional int64 timestamp_sec = 1; // required - Asset ID/ARN
+  optional ExternalMetrics external_metrics = 2; // required - External metrics
+  optional ExternalMetrics external_rejected_metrics = 3; // required - External rejected metrics
+  optional int64 external_cps = 4; // required - External connection per second
+  optional int64 external_rejected_cps = 5; // required - External rejected connection per second
+}
+
+message ExternalMetrics {
+  optional int64 ingress = 1; // Inbound throughput in bps
+  optional int64 egress = 2; // Outbound throughput in bps
+}
+
+message AssetResponse {
+  // when changing the following, one needs to also update
+  // common/src/main/java/com/thousandeyes/cloudmonitoring/inventory/common/model/api/AssetResponse.java
+  oneof asset {
+    AwsGlobalAccelerator global_accelerator = 10;
+    AwsInstance instance = 11;
+    AwsApplicationLoadBalancer application_load_balancer = 12;
+    AwsNetworkLoadBalancer network_load_balancer = 13;
+    AwsClassicLoadBalancer classic_load_balancer = 14;
+    AwsTargetGroup target_group = 15;
+    AwsEni eni = 16;
+    AwsSubnet subnet = 17;
+    AwsVpc vpc = 18;
+    AwsRouteTable route_table = 19;
+    AwsNetworkAcl network_acl = 20;
+    AwsSecurityGroup security_group = 21;
+    AwsTransitGateway transit_gateway = 22;
+    AwsTransitGatewayAttachment transit_gateway_attachment = 23;
+    AwsTransitGatewayRouteTable transit_gateway_route_table = 24;
+    AwsTransitGatewayPeeringAttachment transit_gateway_peering_attachment = 25;
+    LbListener lb_listener = 26;
+    LbListenerRule lb_listener_rule = 27;
+    GaListener ga_listener = 28;
+    GaListenerEndpointGroup ga_listener_endpoint_group = 29;
+    AwsDirectConnectGateway direct_connect_gateway = 30;
+    AwsManagedPrefixList managed_prefix_list = 31;
+    AwsVpcEndpoint vpc_endpoint = 32;
+    AwsVpnGateway vpn_gateway = 33;
+    AwsDirectConnectVirtualInterface direct_connect_virtual_interface = 34;
+    AwsGatewayLoadBalancer gateway_load_balancer = 36;
+
+    te.service.cm.azr.v1.AzrSubnet azr_subnet = 37;
+    te.service.cm.azr.v1.AzrVnet azr_vnet = 38;
+    te.service.cm.azr.v1.AzrNic azr_nic = 39;
+    te.service.cm.azr.v1.AzrVM azr_vm = 40;
+    te.service.cm.azr.v1.AzrLoadBalancer azr_load_balancer = 41;
+    te.service.cm.azr.v1.AzrNsg azr_nsg = 42;
+    te.service.cm.azr.v1.AzrBackendPool azr_backend_pool = 43;
+    te.service.cm.azr.v1.AzrAsg azr_asg = 44;
+    te.service.cm.azr.v1.AzrLoadBalancerRule azr_load_balancer_rule = 45;
+    te.service.cm.azr.v1.AzrLoadBalancerOutboundRule azr_load_balancer_outbound_rule = 46;
+    te.service.cm.azr.v1.AzrLoadBalancerInboundNATRule azr_load_balancer_inbound_nat_rule = 47;
+    te.service.cm.azr.v1.AzrApplicationGateway azr_application_gateway = 48;
+    te.service.cm.azr.v1.AzrApplicationGatewayHttpListener azr_application_gateway_http_listener = 49;
+    te.service.cm.azr.v1.AzrApplicationGatewayBackendHttpConfigurations azr_application_gateway_backend_http_configurations = 50;
+    te.service.cm.azr.v1.AzrApplicationGatewayRequestRoutingRule azr_application_gateway_request_routing_rule = 51;
+    te.service.cm.azr.v1.AzrApplicationGatewayFrontendIpConfiguration azr_application_gateway_frontend_ip_configuration = 52;
+    te.service.cm.azr.v1.AzrApplicationGatewayRedirectConfiguration azr_application_gateway_redirect_configuration = 53;
+    te.service.cm.azr.v1.AzrFrontDoor azr_front_door = 54;
+    te.service.cm.azr.v1.AzrFrontDoorRoutingRule azr_front_door_routing_rule = 55;
+    te.service.cm.azr.v1.AzrFrontDoorBackendPool azr_front_door_backend_pool = 56;
+    te.service.cm.azr.v1.AzrFrontDoorFrontendEndpoint azr_front_door_frontend_endpoint = 57;
+    te.service.cm.azr.v1.AzrFrontDoorRulesEngine azr_front_door_rules_engine = 58;
+    te.service.cm.azr.v1.AzrNatGateway azr_nat_gateway = 59;
+    te.service.cm.azr.v1.AzrOrigin azr_origin = 60;
+    te.service.cm.azr.v1.AzrOriginGroup azr_origin_group = 61;
+    te.service.cm.azr.v1.AzrAfdProfile azr_afd_profile = 62;
+    te.service.cm.azr.v1.AzrApplicationGatewayUrlPathMap azr_application_gateway_url_path_map = 63;
+    te.service.cm.azr.v1.AzrPublicIpAddress azr_public_ip_address = 64;
+    te.service.cm.azr.v1.AzrAfdEndpoint azr_afd_endpoint = 65;
+    te.service.cm.azr.v1.AzrAfdRoute azr_afd_route = 66;
+    te.service.cm.azr.v1.AzrAfdRuleSet azr_afd_rule_set = 67;
+    te.service.cm.azr.v1.AzrAfdRule azr_afd_rule = 68;
+    te.service.cm.azr.v1.AzrLoadBalancerFrontendIpConfiguration azr_load_balancer_frontend_ip_configuration = 69;
+    te.service.cm.azr.v1.AzrAfdCustomDomain azr_afd_custom_domain = 70;
+    te.service.cm.azr.v1.AzrRouteTable azr_route_table = 71;
+    te.service.cm.azr.v1.AzrRoute azr_route = 72;
+    te.service.cm.azr.v1.AzrKubernetesCluster azr_kubernetes_cluster = 73;
+    te.service.cm.azr.v1.AzrAfdOriginGroup azr_afd_origin_group = 74;
+    te.service.cm.azr.v1.AzrAfdOrigin azr_afd_group = 75;
+    te.service.cm.azr.v1.AzrApplicationGatewayBackend azr_application_gateway_backend = 76;
+    te.service.cm.azr.v1.AzrExpressRouteCircuit azr_express_route_circuit = 77;
+    te.service.cm.azr.v1.AzrExpressRouteCrossConnection azr_express_route_cross_connection = 78;
+    te.service.cm.azr.v1.AzrNicIpConfiguration azr_nic_ip_configuration = 79;
+    te.service.cm.azr.v1.AzrVmScaleSet azr_vm_scale_set = 80;
+    te.service.cm.azr.v1.AzrExpressRouteGateway azr_express_route_gateway = 81;
+    te.service.cm.azr.v1.AzrExpressRouteConnection azr_express_route_connection = 82;
+    te.service.cm.azr.v1.AzrVnetPeering azr_vnet_peering = 83;
+    te.service.cm.azr.v1.AzrVirtualHub azr_virtual_hub = 84;
+    te.service.cm.azr.v1.AzrExpressRouteCircuitPeering azr_express_route_circuit_peering = 85;
+    te.service.cm.azr.v1.AzrVirtualNetworkGateway azr_virtual_network_gateway = 86;
+    te.service.cm.azr.v1.AzrHubVirtualNetworkConnections azr_hub_virtual_network_connections = 87;
+    te.service.cm.v1.AwsVpcPeeringConnection vpc_peering_connection = 88;
+    te.service.cm.azr.v1.AzrVmScaleSetVm azr_vm_scale_set_vm = 89;
+    te.service.cm.azr.v1.AzrStorageBlobContainer azr_storage_blob_container = 90;
+    te.service.cm.v1.AwsS3Bucket s3_bucket = 91;
+    te.service.cm.v1.AwsCloudFront cloud_front_distribution = 92;
+  }
+}
+
+

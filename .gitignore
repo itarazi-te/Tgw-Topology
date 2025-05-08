@@ -3,8 +3,9 @@ source/*
 *.html
 lib/*
 *.js
-*.proto
 source/*
 
 *.zip
 .DS_Store
+
+__pycache__/
