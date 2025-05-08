@@ -1,0 +1,10 @@
+.venv/
+source/*
+*.html
+lib/*
+*.js
+*.proto
+source/*
+
+*.zip
+.DS_Store
