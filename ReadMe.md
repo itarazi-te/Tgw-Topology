@@ -1,5 +1,5 @@
 ## Network topology viewer
-
+Note: Please use python version 3.10 or higher
 ## Generate python code from proto files:
 
 You can use the files from the repo or generate again by running the following command:
