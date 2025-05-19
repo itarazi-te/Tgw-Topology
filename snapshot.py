@@ -213,7 +213,9 @@ class AwsTopology:
             case resource_types.TGW_RESOURCE_TYPE_VPN:
                 self.add_vpn_connection(node_id)
             case resource_types.TGW_RESOURCE_TYPE_DIRECT_CONNECT_GATEWAY:
+                node_id = transit_gateway_attachment.resourceId.lower()
                 self.add_direct_connect_gateway(node_id)
+
             case _:
                 print(f"Unknown resource type: {transit_gateway_attachment.resourceType}")
             
