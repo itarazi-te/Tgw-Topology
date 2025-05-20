@@ -1,10 +1,10 @@
 .venv/
+.vscode/
 source/*
 *.html
 lib/*
 *.js
 source/*
-
 *.zip
 .DS_Store
 

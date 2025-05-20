@@ -6,6 +6,9 @@ from prot import read_proto_file
 from te.service.cm.v1 import cm_snapshot_pb2 as cm
 import argparse
 
+from utils.arn_utils import extract_account_region_from_arn, reconstruct_arn
+from constants import *
+
 TGW_URL = "images/tgw.svg"
 def read_json_file(file_path):
     """
@@ -29,43 +32,47 @@ def get_files(directory, extension=".pb"):
 
 
 class AwsTopology:
-    TRANSIT_GATEAWAY_NODE_SIZE = 60
-    VPC_NODE_SIZE = 20
-    VPN_NODE_SIZE = 10
-    DIRECT_CONNECT_NODE_SIZE = 50
-
     def __init__(self):
         self.network = nx.Graph()
 
-    def add_transit_gateway(self, tgw_id):
+    def __init__(self, network=None):
+        if network is None:
+            self.network = nx.Graph()
+        else:
+            self.network = network.copy()
+
+    def add_transit_gateway(self, tgw_id, name=None):
         """ 
         Add a transit gateway to the network.
         """
-        self.network.add_node(tgw_id, label="TGW", title=tgw_id, image=TGW_URL, shape="image", resource_type="tgw", level=1, size=self.TRANSIT_GATEAWAY_NODE_SIZE)
+        if tgw_id in self.network.nodes and name is None:
+            return
+        
+        self.network.add_node(tgw_id, label="TGW", title=f"{tgw_id}\n{name}", name=name, image=TGW_URL, shape="image", resource_type="tgw", level=1, size=TRANSIT_GATEAWAY_NODE_SIZE)
 
-    def add_vpc(self, vpc_arn):
+    def add_vpc(self, vpc_arn, name=None):
         """ 
         Add a VPC to the network with data account and region.
         """
         vpc_id = vpc_arn.replace("garn:", "arn:").lower()
         # vpc_id = self.arn_group_by_account_region(vpc_id)
-        account_id, region_id = self.extract_account_region_from_arn(vpc_arn)
+        if vpc_id in self.network.nodes and name is None:
+            return
+        account_id, region_id = extract_account_region_from_arn(vpc_arn)
         
-        self.network.add_node(vpc_id, label="VPC", title=vpc_id, image="images/vpc.svg", shape="image", level=2, size=self.VPC_NODE_SIZE)
+        self.network.add_node(vpc_id, label="VPC",resource_type="vpc", title=f"{vpc_id}\n{name}", image="images/vpc.svg", shape="image", level=2, size=VPC_NODE_SIZE)
         if account_id and region_id:
-            self.network.nodes[vpc_id]['resource_type'] = "vpc"
             self.network.nodes[vpc_id]['account'] = account_id
             self.network.nodes[vpc_id]['region'] = region_id
     
-    def add_vpn_gateway(self, arn):
+    def add_vpn_gateway(self, arn, name=None):
         """ 
         Add a VPN gateway to the network.
         """
         vpn_id = arn.replace("garn:", "arn:").lower()
-        account_id, region_id = self.extract_account_region_from_arn(vpn_id)
-        self.network.add_node(vpn_id, label="VPN", title=vpn_id, image="images/vpn-gateway.svg", shape="image", level=3, size=self.VPN_NODE_SIZE)
+        account_id, region_id = extract_account_region_from_arn(vpn_id)
+        self.network.add_node(vpn_id, label="VPN", resource_type="vpn-gateway", title=vpn_id, image="images/vpn-gateway.svg", shape="image", level=3, size=VPN_NODE_SIZE)
         if account_id and region_id:
-            self.network.nodes[vpn_id]['resource_type'] = "vpn-gateway"
             self.network.nodes[vpn_id]['account'] = account_id
             self.network.nodes[vpn_id]['region'] = region_id
         
@@ -74,24 +81,36 @@ class AwsTopology:
         Add a VPN connection to the network.
         """
         vpn_id = arn.replace("garn:", "arn:").lower()
-        account_id, region_id = self.extract_account_region_from_arn(vpn_id)
-        self.network.add_node(vpn_id, label="VPN", title=vpn_id, image="images/vpn-connection.svg", shape="image", level=3, size=self.VPN_NODE_SIZE)
+        account_id, region_id = extract_account_region_from_arn(vpn_id)
+        self.network.add_node(vpn_id, label="VPN", resource_type="vpn-connection", title=vpn_id, image="images/vpn-connection.svg", shape="image", level=3, size=VPN_NODE_SIZE)
         if account_id and region_id:
-            self.network.nodes[vpn_id]['resource_type'] = "vpn-connection"
             self.network.nodes[vpn_id]['account'] = account_id
             self.network.nodes[vpn_id]['region'] = region_id
 
-    def add_direct_connect_gateway(self, arn):
+    def add_direct_connect_gateway(self, arn, name=None):
         """ 
         Add a Direct Connect gateway to the network.
         """
+        if arn in self.network.nodes and name is None:
+            return
         dcg_id = arn.replace("garn:", "arn:").lower()
-        account_id, region_id = self.extract_account_region_from_arn(dcg_id)
-        self.network.add_node(dcg_id, label="DCG", title=dcg_id, image="images/direct-connect-gateway.svg", shape="image", level=0, size=self.DIRECT_CONNECT_NODE_SIZE)
+        account_id, region_id = extract_account_region_from_arn(dcg_id)
+        self.network.add_node(dcg_id, label="DCG", resource_type="direct-connect-gateway", title=dcg_id, image="images/direct-connect-gateway.svg", shape="image", level=0, size=DIRECT_CONNECT_NODE_SIZE)
         if account_id and region_id:
-            self.network.nodes[dcg_id]['resource_type'] = "direct-connect-gateway"
             self.network.nodes[dcg_id]['account'] = account_id
             self.network.nodes[dcg_id]['region'] = region_id
+
+    def add_direct_connect_connection(self, arn, name=None):
+        """ 
+        Add a Direct Connect connection to the network.
+        """
+        dc_id = arn.replace("garn:", "arn:").lower()
+        account_id, region_id = extract_account_region_from_arn(dc_id)
+        self.network.add_node(dc_id, label="DC", resource_type="direct-connect-connection", title=f"{dc_id}\n{name}", image="images/direct-connect-connection.svg", shape="image", level=0, size=DIRECT_CONNECT_NODE_SIZE)
+        if account_id and region_id:
+            self.network.nodes[dc_id]['resource_type'] = "direct-connect-connection"
+            self.network.nodes[dc_id]['account'] = account_id
+            self.network.nodes[dc_id]['region'] = region_id
 
     def add_vpc_peering(self, vpc_id, peer_vpc_id, connection_id):
         """ 
@@ -101,38 +120,8 @@ class AwsTopology:
         peer_vpc_id = peer_vpc_id.replace("garn:", "arn:").lower()
         self.add_vpc(vpc_id)
         self.add_vpc(peer_vpc_id)
-        self.network.add_edge(vpc_id, peer_vpc_id, color="green", title=connection_id)
+        self.network.add_edge(vpc_id, peer_vpc_id, color="green", title=connection_id, weight=VPC_PEER_WIDTH)
 
-    def _add_attachment_connection_node(self, node_id):
-        resource_type = self.extract_resource_type(node_id)
-        self.network.add_node(node_id, label=resource_type, title=node_id, color="blue", shape="image", image=f"images/{resource_type}.svg")
-
-    def _add_attachment_edge(self, node_id, tgw_id, attachment_id, attachment_type=None):
-        """
-        Add an attachment connection to the network.
-        """
-        ATTACHMENT_TYPE_COLORS ={
-            "TGW-Attach": "black",
-            "VPC-Peering": "green",
-            "TGW-Peering": "red"
-        }
-        self.network.add_edge(node_id, tgw_id,
-                               title=attachment_id, color=ATTACHMENT_TYPE_COLORS[attachment_type])
-
-    def add_attachment(self, node_id, tgw_id, attachment_id, attachment_type=None):
-        """
-        Add an attachment to the network.
-        """
-        node_id = node_id.replace("garn:", "arn:").lower()
-        tgw_id = tgw_id.replace("garn:", "arn:").lower()
-        if attachment_type == "TGW-Peering":
-            self.add_transit_gateway(node_id)
-            self.add_transit_gateway(tgw_id)
-        else:
-            self._add_attachment_connection_node(node_id)
-            
-            
-        self._add_attachment_edge(node_id, tgw_id, attachment_id, attachment_type)
 
     def add_vpn_gateway_connection(self, node_id, vpc_id):
         """
@@ -142,7 +131,19 @@ class AwsTopology:
         vpc_id = vpc_id.replace("garn:", "arn:").lower()
         self.add_vpn_gateway(node_id)
         self.add_vpc(vpc_id)
-        self.network.add_edge(node_id, vpc_id, color="black")
+        self.network.add_edge(node_id, vpc_id, color="black",weight=VPC_VPN_EDGE_WIDTH)
+
+    def add_direct_connect_virtual_interface(self, dcvif):
+        if not self.network.has_node(dcvif.connectionId):
+            self.add_direct_connect_connection(dcvif.connectionId)
+        if dcvif.virtualGatewayId:    
+            vgw_arn = reconstruct_arn('ec2', dcvif.accountId, dcvif.region, 'vpn-gateway', dcvif.virtualGatewayId)
+            self.add_vpn_gateway(vgw_arn)
+            self.network.add_edge(dcvif.connectionId, vgw_arn, color="blue", title=dcvif.assetId)
+        elif dcvif.directConnectGatewayId:
+            self.network.add_edge(dcvif.connectionId, dcvif.directConnectGatewayId, color="blue", title=dcvif.assetId, weight=DIRECT_CONNECT_CONNECTION_GATEWAY_WIDTH)
+        else:
+            print(f"Unknown virtual interface type: {dcvif.virtualInterfaceType}")
 
     def get_min_size_connected_componnents_subgraph(self, min_size=2):
         """
@@ -153,7 +154,7 @@ class AwsTopology:
         subgraph = self.network.subgraph(filtered_nodes)
         return subgraph
 
-    def show(self, output_file="example.html"):
+    def show(self, output_file="example.html", min_size_connected_components=10):
         """
         Display the network.
         """
@@ -167,35 +168,13 @@ class AwsTopology:
         # #displaygraph.show_buttons(filter_=['layout'])
 
         # displaygraph.show("example_groupped.html")
+        graph = self.get_min_size_connected_componnents_subgraph(min_size_connected_components)
+        pyvis_graph = Network(notebook=True, cdn_resources="remote", height="1440px", width="100%",select_menu=True, filter_menu=True)
+        pyvis_graph.from_nx(graph)
+        pyvis_graph.toggle_physics(True)
+        pyvis_graph.force_atlas_2based()
+        pyvis_graph.show(output_file)
 
-        orig_graph = Network(notebook=True, cdn_resources="remote", height="1440px", width="100%",select_menu=True, filter_menu=True)
-        orig_graph.from_nx(self.get_min_size_connected_componnents_subgraph(6))
-        orig_graph.toggle_physics(True)
-        orig_graph.force_atlas_2based()
-        orig_graph.show(output_file)
-
-
-    @staticmethod
-    def extract_resource_type(resource_arn):
-        """
-        Extract the resource type from the ARN.
-        """
-        parts = resource_arn.split(':')
-        if len(parts) > 5:
-            return parts[5].split('/')[0]
-        return None
-
-    @staticmethod
-    def extract_account_region_from_arn(arn):
-        """
-        Extract the account ID and region from the ARN.
-        """
-        parts = arn.split(':')
-        if len(parts) > 4:
-            account_id = parts[4]
-            region_id = parts[3]
-            return account_id, region_id
-        return None, None
 
 
     def add_tgw_attachment(self, transit_gateway_attachment):
@@ -207,20 +186,24 @@ class AwsTopology:
 
         node_id = transit_gateway_attachment.resourceArn.replace("garn:", "arn:").lower()
         resource_types = cm.TgwAttachmentResourceType
+        weight = 1
         match transit_gateway_attachment.resourceType:
             case resource_types.TGW_RESOURCE_TYPE_VPC:
                 self.add_vpc(node_id)
+                weight=TGW_VPC_ATTCH_WIDTH
             case resource_types.TGW_RESOURCE_TYPE_VPN:
                 self.add_vpn_connection(node_id)
+                weight=TGW_VPN_ATTACH_WIDTH
             case resource_types.TGW_RESOURCE_TYPE_DIRECT_CONNECT_GATEWAY:
                 node_id = transit_gateway_attachment.resourceId.lower()
                 self.add_direct_connect_gateway(node_id)
+                weight=TGW_DIRECT_CONNECT_WIDTH
 
             case _:
                 print(f"Unknown resource type: {transit_gateway_attachment.resourceType}")
             
         attachment_id = transit_gateway_attachment.transitGatewayAttachmentId.replace("garn:", "arn:").lower()
-        self.network.add_edge(node_id, tgw_id,title=attachment_id, color='black')
+        self.network.add_edge(node_id, tgw_id,title=attachment_id, color='black', weight=weight)
     
     def add_tgw_peering(self, tgw_id, peer_tgw_id, attachment_id):
         """
@@ -230,7 +213,7 @@ class AwsTopology:
         peer_tgw_id = peer_tgw_id.replace("garn:", "arn:").lower()
         self.add_transit_gateway(tgw_id)
         self.add_transit_gateway(peer_tgw_id)
-        self.network.add_edge(tgw_id, peer_tgw_id, color="red", title=attachment_id)
+        self.network.add_edge(tgw_id, peer_tgw_id, color="red", title=attachment_id, weight=TRANSIT_GATEWAY_PEER_WIDTH)
 
     def get_acount_region_groupped_graph(self):
         """
@@ -278,11 +261,14 @@ def create_graph(dir_path):
         for tgw in assets.transitGateways:
             if tgw.assetId not in trasnsit_gateways:
                 trasnsit_gateways[tgw.assetId] = tgw
-                net.add_transit_gateway(tgw.assetId)
+                net.add_transit_gateway(tgw.assetId, tgw.name)
+
+        for vpc in assets.vpcs:
+            net.add_vpc(vpc.assetId, vpc.name)
 
         for tgwa in assets.transitGatewayAttachments:
             if not tgwa.tgwArn:
-                print(f"TGW ARN not found for {tgwa}")
+                #print(f"TGW ARN not found for {tgwa}")
                 continue
             else:
                 net.add_tgw_attachment(tgwa)
@@ -297,7 +283,31 @@ def create_graph(dir_path):
             for vpc in vpngw.vpcAttachments:
                 net.add_vpn_gateway_connection(vpngw.assetId, vpc.vpcArn)
 
+        for dcg in assets.awsDirectConnectGateway:
+            net.add_direct_connect_gateway(dcg.directConnectGatewayId, dcg.directConnectGatewayName)
+            for association in dcg.directConnectGatewayAssociations:
+                if association.associatedGateway.type == cm.DirectConnectGatewayGatewayType.DIRECT_CONNECT_GATEWAY_GATEWAY_TYPE_VIRTUAL_PRIVATE_GATEWAY:
+                    vgw = association.associatedGateway
+                    vgw_arn = reconstruct_arn('ec2', vgw.ownerAccount, vgw.region, 'vpn-gateway', vgw.id)
+                    net.add_vpn_gateway(vgw_arn)
+                    net.network.add_edge(dcg.directConnectGatewayId, vgw_arn, color="blue", title=association.associationId, weight=DIRECT_CONNECT_VPN_CONNECTION_WIDTH)
+                
+
+        for dcc in assets.directConnectConnections:
+            net.add_direct_connect_connection(dcc.connectionId, dcc.connectionName)
+        
+        for dcvif in assets.directConnectVirtualInterfaces:
+            net.add_direct_connect_virtual_interface(dcvif)
+            
     return net
+
+def count_resource_type(graph,resource_type):
+    count = 0
+    for node in graph.nodes(data=True):
+        if node[1].get("resource_type", "") == resource_type:
+            count+=1
+
+    return count
 
 def main():
     parser = argparse.ArgumentParser(description="Generate AWS topology graph.")
