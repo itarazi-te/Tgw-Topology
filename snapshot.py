@@ -49,6 +49,10 @@ class AwsTopology:
             return
         
         self.network.add_node(tgw_id, label="TGW", title=f"{tgw_id}\n{name}", name=name, image=TGW_URL, shape="image", resource_type="tgw", level=1, size=TRANSIT_GATEAWAY_NODE_SIZE)
+        account_id, region_id = extract_account_region_from_arn(tgw_id)
+        if account_id and region_id:
+            self.network.nodes[tgw_id]['account'] = account_id
+            self.network.nodes[tgw_id]['region'] = region_id
 
     def add_vpc(self, vpc_arn, name=None):
         """ 
@@ -95,7 +99,7 @@ class AwsTopology:
             return
         dcg_id = arn.replace("garn:", "arn:").lower()
         account_id, region_id = extract_account_region_from_arn(dcg_id)
-        self.network.add_node(dcg_id, label="DCG", resource_type="direct-connect-gateway", title=dcg_id, image="images/direct-connect-gateway.svg", shape="image", level=0, size=DIRECT_CONNECT_NODE_SIZE)
+        self.network.add_node(dcg_id, label="DCG", resource_type="direct-connect-gateway", title=f"{dcg_id}\n{name}", image="images/direct-connect-gateway.svg", shape="image", level=0, size=DIRECT_CONNECT_NODE_SIZE)
         if account_id and region_id:
             self.network.nodes[dcg_id]['account'] = account_id
             self.network.nodes[dcg_id]['region'] = region_id
